@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Docker容器的使用Docker是一个开源的引擎，可以轻松的为任何应用创建一个轻量级的、可移植的、自给自足的容器。开发者在笔记本上编译测试通过的容器可以批量地在生产环境中部署，包括VMs（虚拟机）、bare metal、OpenStack 集群和其他的基础应用平台。Docker通常用于如下场景： web应用的自动化打包和发布； 自动化测试和持续集成、发布； 在服务型环境中部署和调整数据库或其他的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker容器的使用">
+<meta property="og:url" content="http://example.com/2020/09/14/Docker%E5%AE%B9%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:site_name" content="地字第一号">
+<meta property="og:description" content="Docker容器的使用Docker是一个开源的引擎，可以轻松的为任何应用创建一个轻量级的、可移植的、自给自足的容器。开发者在笔记本上编译测试通过的容器可以批量地在生产环境中部署，包括VMs（虚拟机）、bare metal、OpenStack 集群和其他的基础应用平台。Docker通常用于如下场景： web应用的自动化打包和发布； 自动化测试和持续集成、发布； 在服务型环境中部署和调整数据库或其他的">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2020/09/14/Docker%E5%AE%B9%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8/docker1.png">
+<meta property="og:image" content="http://example.com/2020/09/14/Docker%E5%AE%B9%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8/docker2.png">
+<meta property="og:image" content="http://example.com/2020/09/14/Docker%E5%AE%B9%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8/docker3.png">
+<meta property="og:image" content="http://example.com/2020/09/14/Docker%E5%AE%B9%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8/docker4.png">
+<meta property="og:image" content="http://example.com/2020/09/14/Docker%E5%AE%B9%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8/docker5.png">
+<meta property="og:image" content="http://example.com/2020/09/14/Docker%E5%AE%B9%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8/docker6.png">
+<meta property="og:image" content="http://example.com/2020/09/14/Docker%E5%AE%B9%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8/docker7.png">
+<meta property="og:image" content="http://example.com/2020/09/14/Docker%E5%AE%B9%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8/docker8.png">
+<meta property="og:image" content="http://example.com/2020/09/14/Docker%E5%AE%B9%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8/docker9.png">
+<meta property="og:image" content="http://example.com/2020/09/14/Docker%E5%AE%B9%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8/docker10.png">
+<meta property="article:published_time" content="2020-09-14T08:23:54.000Z">
+<meta property="article:modified_time" content="2020-09-14T08:32:36.701Z">
+<meta property="article:author" content="归海一刀">
+<meta property="article:tag" content="docker">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2020/09/14/Docker%E5%AE%B9%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8/docker1.png">
+
+<link rel="canonical" href="http://example.com/2020/09/14/Docker%E5%AE%B9%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Docker容器的使用 | 地字第一号</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="地字第一号" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">地字第一号</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">重庆·嘉陵江·望江阁</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/09/14/Docker%E5%AE%B9%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="归海一刀">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="地字第一号">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Docker容器的使用
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-09-14 16:23:54 / 修改时间：16:32:36" itemprop="dateCreated datePublished" datetime="2020-09-14T16:23:54+08:00">2020-09-14</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AE%B9%E5%99%A8/" itemprop="url" rel="index"><span itemprop="name">容器</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="Docker容器的使用"><a href="#Docker容器的使用" class="headerlink" title="Docker容器的使用"></a>Docker容器的使用</h2><h3 id="Docker是一个开源的引擎，可以轻松的为任何应用创建一个轻量级的、可移植的、自给自足的容器。开发者在笔记本上编译测试通过的容器可以批量地在生产环境中部署，包括VMs（虚拟机）、bare-metal、OpenStack-集群和其他的基础应用平台。"><a href="#Docker是一个开源的引擎，可以轻松的为任何应用创建一个轻量级的、可移植的、自给自足的容器。开发者在笔记本上编译测试通过的容器可以批量地在生产环境中部署，包括VMs（虚拟机）、bare-metal、OpenStack-集群和其他的基础应用平台。" class="headerlink" title="Docker是一个开源的引擎，可以轻松的为任何应用创建一个轻量级的、可移植的、自给自足的容器。开发者在笔记本上编译测试通过的容器可以批量地在生产环境中部署，包括VMs（虚拟机）、bare metal、OpenStack 集群和其他的基础应用平台。"></a>Docker是一个开源的引擎，可以轻松的为任何应用创建一个轻量级的、可移植的、自给自足的容器。开发者在笔记本上编译测试通过的容器可以批量地在生产环境中部署，包括VMs（虚拟机）、<a target="_blank" rel="noopener" href="http://www.whatis.com.cn/word_5275.htm">bare metal</a>、OpenStack 集群和其他的基础应用平台。</h3><h2 id="Docker通常用于如下场景："><a href="#Docker通常用于如下场景：" class="headerlink" title="Docker通常用于如下场景："></a>Docker通常用于如下场景：</h2><ul>
+<li>web应用的自动化打包和发布；</li>
+<li>自动化测试和持续集成、发布；</li>
+<li>在服务型环境中部署和调整数据库或其他的后台应用；</li>
+<li>从头编译或者扩展现有的OpenShift或Cloud Foundry平台来搭建自己的PaaS环境。</li>
+</ul>
+<p>ubuntu 上安装： </p>
+<p>wget -qO- <a target="_blank" rel="noopener" href="https://get.docker.com/">https://get.docker.com/</a> | sh 或者 sudo apt-get install docker </p>
+<p><img src="/2020/09/14/Docker%E5%AE%B9%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8/docker1.png" alt="docker.png"></p>
+<h2 id="Docker系统有两个程序：docker服务端和docker客户端。其中docker服务端是一个服务进程，管理着所有的容器。docker客户端则扮演着docker服务端的远程控制器，可以用来控制docker的服务端进程。大部分情况下，docker服务端和客户端运行在一台机器上。"><a href="#Docker系统有两个程序：docker服务端和docker客户端。其中docker服务端是一个服务进程，管理着所有的容器。docker客户端则扮演着docker服务端的远程控制器，可以用来控制docker的服务端进程。大部分情况下，docker服务端和客户端运行在一台机器上。" class="headerlink" title="Docker系统有两个程序：docker服务端和docker客户端。其中docker服务端是一个服务进程，管理着所有的容器。docker客户端则扮演着docker服务端的远程控制器，可以用来控制docker的服务端进程。大部分情况下，docker服务端和客户端运行在一台机器上。"></a>Docker系统有两个程序：docker服务端和docker客户端。其中docker服务端是一个服务进程，管理着所有的容器。docker客户端则扮演着docker服务端的远程控制器，可以用来控制docker的服务端进程。大部分情况下，docker服务端和客户端运行在一台机器上。</h2><p><img src="/2020/09/14/Docker%E5%AE%B9%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8/docker2.png" alt="未知_1.png"></p>
+<h2 id="搜索可用的docker镜像"><a href="#搜索可用的docker镜像" class="headerlink" title="搜索可用的docker镜像"></a>搜索可用的docker镜像</h2><h2 id="使用docker最简单的方式莫过于从现有的容器镜像开始。Docker官方网站专门有一个页面来存储所有可用的镜像，网址是：index-docker-io。你可以通过浏览这个网页来查找你想要使用的镜像，或者使用命令行的工具来检索。"><a href="#使用docker最简单的方式莫过于从现有的容器镜像开始。Docker官方网站专门有一个页面来存储所有可用的镜像，网址是：index-docker-io。你可以通过浏览这个网页来查找你想要使用的镜像，或者使用命令行的工具来检索。" class="headerlink" title="使用docker最简单的方式莫过于从现有的容器镜像开始。Docker官方网站专门有一个页面来存储所有可用的镜像，网址是：index.docker.io。你可以通过浏览这个网页来查找你想要使用的镜像，或者使用命令行的工具来检索。"></a>使用docker最简单的方式莫过于从现有的容器镜像开始。Docker官方网站专门有一个页面来存储所有可用的镜像，网址是：<a target="_blank" rel="noopener" href="http://index.docker.io/">index.docker.io</a>。你可以通过浏览这个网页来查找你想要使用的镜像，或者使用命令行的工具来检索。</h2><h2 id="目标："><a href="#目标：" class="headerlink" title="目标："></a>目标：</h2><h2 id="学会使用命令行的工具来检索名字叫做tutorial的镜像。"><a href="#学会使用命令行的工具来检索名字叫做tutorial的镜像。" class="headerlink" title="学会使用命令行的工具来检索名字叫做tutorial的镜像。"></a>学会使用命令行的工具来检索名字叫做tutorial的镜像。</h2><h2 id="提示："><a href="#提示：" class="headerlink" title="提示："></a>提示：</h2><h2 id="命令行的格式为：docker-search-镜像名字"><a href="#命令行的格式为：docker-search-镜像名字" class="headerlink" title="命令行的格式为：docker search 镜像名字"></a>命令行的格式为：docker search 镜像名字</h2><p><img src="/2020/09/14/Docker%E5%AE%B9%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8/docker3.png" alt="未知_2.png"></p>
+<h2 id="学会使用docker命令来下载镜像"><a href="#学会使用docker命令来下载镜像" class="headerlink" title="学会使用docker命令来下载镜像"></a>学会使用docker命令来下载镜像</h2><h2 id="下载镜像的命令非常简单，使用docker-pull命令即可。-译者按：docker命令和git有一些类似的地方）。在docker的镜像索引网站上面，镜像都是按照-用户名-镜像名的方式来存储的。有一组比较特殊的镜像，比如ubuntu这类基础镜像，经过官方的验证，值得信任，可以直接用-镜像名来检索到。"><a href="#下载镜像的命令非常简单，使用docker-pull命令即可。-译者按：docker命令和git有一些类似的地方）。在docker的镜像索引网站上面，镜像都是按照-用户名-镜像名的方式来存储的。有一组比较特殊的镜像，比如ubuntu这类基础镜像，经过官方的验证，值得信任，可以直接用-镜像名来检索到。" class="headerlink" title="下载镜像的命令非常简单，使用docker pull命令即可。(译者按：docker命令和git有一些类似的地方）。在docker的镜像索引网站上面，镜像都是按照 用户名/ 镜像名的方式来存储的。有一组比较特殊的镜像，比如ubuntu这类基础镜像，经过官方的验证，值得信任，可以直接用 镜像名来检索到。"></a>下载镜像的命令非常简单，使用docker pull命令即可。(译者按：docker命令和git有一些类似的地方）。在docker的镜像索引网站上面，镜像都是按照 用户名/ 镜像名的方式来存储的。有一组比较特殊的镜像，比如ubuntu这类基础镜像，经过官方的验证，值得信任，可以直接用 镜像名来检索到。</h2><h2 id="目标：-1"><a href="#目标：-1" class="headerlink" title="目标："></a>目标：</h2><h2 id="通过docker命令下载tutorial镜像。"><a href="#通过docker命令下载tutorial镜像。" class="headerlink" title="通过docker命令下载tutorial镜像。"></a>通过docker命令下载tutorial镜像。</h2><h2 id="提示：-1"><a href="#提示：-1" class="headerlink" title="提示："></a>提示：</h2><h2 id="执行pull命令的时候要写完整的名字，比如”learn-tutorial”。"><a href="#执行pull命令的时候要写完整的名字，比如”learn-tutorial”。" class="headerlink" title="执行pull命令的时候要写完整的名字，比如”learn/tutorial”。"></a>执行pull命令的时候要写完整的名字，比如”learn/tutorial”。</h2><p><img src="/2020/09/14/Docker%E5%AE%B9%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8/docker4.png" alt="未知_3.png"></p>
+<p>查看安装的镜像： </p>
+<p><img src="/2020/09/14/Docker%E5%AE%B9%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8/docker5.png" alt="未知_4.png"></p>
+<h2 id="在docker容器中运行hello-world"><a href="#在docker容器中运行hello-world" class="headerlink" title="在docker容器中运行hello world!"></a>在docker容器中运行hello world!</h2><h2 id="docker容器可以理解为在沙盒中运行的进程。这个沙盒包含了该进程运行所必须的资源，包括文件系统、系统类库、shell-环境等等。但这个沙盒默认是不会运行任何程序的。你需要在沙盒中运行一个进程来启动某一个容器。这个进程是该容器的唯一进程，所以当该进程结束的时候，容器也会完全的停止。"><a href="#docker容器可以理解为在沙盒中运行的进程。这个沙盒包含了该进程运行所必须的资源，包括文件系统、系统类库、shell-环境等等。但这个沙盒默认是不会运行任何程序的。你需要在沙盒中运行一个进程来启动某一个容器。这个进程是该容器的唯一进程，所以当该进程结束的时候，容器也会完全的停止。" class="headerlink" title="docker容器可以理解为在沙盒中运行的进程。这个沙盒包含了该进程运行所必须的资源，包括文件系统、系统类库、shell 环境等等。但这个沙盒默认是不会运行任何程序的。你需要在沙盒中运行一个进程来启动某一个容器。这个进程是该容器的唯一进程，所以当该进程结束的时候，容器也会完全的停止。"></a>docker容器可以理解为在沙盒中运行的进程。这个沙盒包含了该进程运行所必须的资源，包括文件系统、系统类库、shell 环境等等。但这个沙盒默认是不会运行任何程序的。你需要在沙盒中运行一个进程来启动某一个容器。这个进程是该容器的唯一进程，所以当该进程结束的时候，容器也会完全的停止。</h2><h2 id="目标：-2"><a href="#目标：-2" class="headerlink" title="目标："></a>目标：</h2><h2 id="在我们刚刚下载的镜像中输出”hello-word”。为了达到这个目的，我们需要在这个容器中运行”echo”命令，输出”hello-word”。"><a href="#在我们刚刚下载的镜像中输出”hello-word”。为了达到这个目的，我们需要在这个容器中运行”echo”命令，输出”hello-word”。" class="headerlink" title="在我们刚刚下载的镜像中输出”hello word”。为了达到这个目的，我们需要在这个容器中运行”echo”命令，输出”hello word”。"></a>在我们刚刚下载的镜像中输出”hello word”。为了达到这个目的，我们需要在这个容器中运行”echo”命令，输出”hello word”。</h2><h2 id="提示：-2"><a href="#提示：-2" class="headerlink" title="提示："></a>提示：</h2><h2 id="docker-run命令有两个参数，一个是镜像名，一个是要在镜像中运行的命令。"><a href="#docker-run命令有两个参数，一个是镜像名，一个是要在镜像中运行的命令。" class="headerlink" title="docker run命令有两个参数，一个是镜像名，一个是要在镜像中运行的命令。"></a>docker run命令有两个参数，一个是镜像名，一个是要在镜像中运行的命令。</h2><p><img src="/2020/09/14/Docker%E5%AE%B9%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8/docker6.png" alt="未知_5.png"></p>
+<h2 id="在容器中安装新的程序"><a href="#在容器中安装新的程序" class="headerlink" title="在容器中安装新的程序"></a>在容器中安装新的程序</h2><h2 id="下一步我们要做的事情是在容器里面安装一个简单的程序-ping-。我们之前下载的tutorial镜像是基于ubuntu的，所以你可以使用ubuntu的apt-get命令来安装ping程序：apt-get-install-y-ping。"><a href="#下一步我们要做的事情是在容器里面安装一个简单的程序-ping-。我们之前下载的tutorial镜像是基于ubuntu的，所以你可以使用ubuntu的apt-get命令来安装ping程序：apt-get-install-y-ping。" class="headerlink" title="下一步我们要做的事情是在容器里面安装一个简单的程序(ping)。我们之前下载的tutorial镜像是基于ubuntu的，所以你可以使用ubuntu的apt-get命令来安装ping程序：apt-get install -y ping。"></a>下一步我们要做的事情是在容器里面安装一个简单的程序(ping)。我们之前下载的tutorial镜像是基于ubuntu的，所以你可以使用ubuntu的apt-get命令来安装ping程序：apt-get install -y ping。</h2><h2 id="备注：apt-get-命令执行完毕之后，容器就会停止，但对容器的改动不会丢失。"><a href="#备注：apt-get-命令执行完毕之后，容器就会停止，但对容器的改动不会丢失。" class="headerlink" title="备注：apt-get 命令执行完毕之后，容器就会停止，但对容器的改动不会丢失。"></a>备注：apt-get 命令执行完毕之后，容器就会停止，但对容器的改动不会丢失。</h2><h2 id="目标：-3"><a href="#目标：-3" class="headerlink" title="目标："></a>目标：</h2><h2 id="在learn-tutorial镜像里面安装ping程序。"><a href="#在learn-tutorial镜像里面安装ping程序。" class="headerlink" title="在learn/tutorial镜像里面安装ping程序。"></a>在learn/tutorial镜像里面安装ping程序。</h2><h2 id="提示：-3"><a href="#提示：-3" class="headerlink" title="提示："></a>提示：</h2><h2 id="在执行apt-get-命令的时候，要带上-y参数。如果不指定-y参数的话，apt-get命令会进入交互模式，需要用户输入命令来进行确认，但在docker环境中是无法响应这种交互的。"><a href="#在执行apt-get-命令的时候，要带上-y参数。如果不指定-y参数的话，apt-get命令会进入交互模式，需要用户输入命令来进行确认，但在docker环境中是无法响应这种交互的。" class="headerlink" title="在执行apt-get 命令的时候，要带上-y参数。如果不指定-y参数的话，apt-get命令会进入交互模式，需要用户输入命令来进行确认，但在docker环境中是无法响应这种交互的。"></a>在执行apt-get 命令的时候，要带上-y参数。如果不指定-y参数的话，apt-get命令会进入交互模式，需要用户输入命令来进行确认，但在docker环境中是无法响应这种交互的。</h2><p><img src="/2020/09/14/Docker%E5%AE%B9%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8/docker7.png" alt="未知_6.png"></p>
+<h2 id="保存对容器的修改"><a href="#保存对容器的修改" class="headerlink" title="保存对容器的修改"></a>保存对容器的修改</h2><h2 id="当你对某一个容器做了修改之后（通过在容器中运行某一个命令），可以把对容器的修改保存下来，这样下次可以从保存后的最新状态运行该容器。docker中保存状态的过程称之为committing，它保存的新旧状态之间的区别，从而产生一个新的版本。"><a href="#当你对某一个容器做了修改之后（通过在容器中运行某一个命令），可以把对容器的修改保存下来，这样下次可以从保存后的最新状态运行该容器。docker中保存状态的过程称之为committing，它保存的新旧状态之间的区别，从而产生一个新的版本。" class="headerlink" title="当你对某一个容器做了修改之后（通过在容器中运行某一个命令），可以把对容器的修改保存下来，这样下次可以从保存后的最新状态运行该容器。docker中保存状态的过程称之为committing，它保存的新旧状态之间的区别，从而产生一个新的版本。"></a>当你对某一个容器做了修改之后（通过在容器中运行某一个命令），可以把对容器的修改保存下来，这样下次可以从保存后的最新状态运行该容器。docker中保存状态的过程称之为committing，它保存的新旧状态之间的区别，从而产生一个新的版本。</h2><h2 id="目标：-4"><a href="#目标：-4" class="headerlink" title="目标："></a>目标：</h2><h2 id="首先使用docker-ps-l命令获得安装完ping命令之后容器的id。然后把这个镜像保存为learn-ping。"><a href="#首先使用docker-ps-l命令获得安装完ping命令之后容器的id。然后把这个镜像保存为learn-ping。" class="headerlink" title="首先使用docker ps -l命令获得安装完ping命令之后容器的id。然后把这个镜像保存为learn/ping。"></a>首先使用docker ps -l命令获得安装完ping命令之后容器的id。然后把这个镜像保存为learn/ping。</h2><h2 id="提示：-4"><a href="#提示：-4" class="headerlink" title="提示："></a>提示：</h2><h2 id="1-运行docker-commit，可以查看该命令的参数列表。"><a href="#1-运行docker-commit，可以查看该命令的参数列表。" class="headerlink" title="1. 运行docker commit，可以查看该命令的参数列表。"></a>1. 运行docker commit，可以查看该命令的参数列表。</h2><h2 id="2-你需要指定要提交保存容器的ID。-译者按：通过docker-ps-l-命令获得"><a href="#2-你需要指定要提交保存容器的ID。-译者按：通过docker-ps-l-命令获得" class="headerlink" title="2. 你需要指定要提交保存容器的ID。(译者按：通过docker ps -l 命令获得)"></a>2. 你需要指定要提交保存容器的ID。(译者按：通过docker ps -l 命令获得)</h2><h2 id="3-无需拷贝完整的id，通常来讲最开始的三至四个字母即可区分。（译者按：非常类似git里面的版本号"><a href="#3-无需拷贝完整的id，通常来讲最开始的三至四个字母即可区分。（译者按：非常类似git里面的版本号" class="headerlink" title="3. 无需拷贝完整的id，通常来讲最开始的三至四个字母即可区分。（译者按：非常类似git里面的版本号)"></a>3. 无需拷贝完整的id，通常来讲最开始的三至四个字母即可区分。（译者按：非常类似git里面的版本号)</h2><p><img src="/2020/09/14/Docker%E5%AE%B9%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8/docker8.png" alt="未知_7.png"></p>
+<h2 id="运行新的镜像"><a href="#运行新的镜像" class="headerlink" title="运行新的镜像"></a>运行新的镜像</h2><h2 id="ok，到现在为止，你已经建立了一个完整的、自成体系的docker环境，并且安装了ping命令在里面。它可以在任何支持docker环境的系统中运行啦！-译者按：是不是很神奇呢？-让我们来体验一下吧！"><a href="#ok，到现在为止，你已经建立了一个完整的、自成体系的docker环境，并且安装了ping命令在里面。它可以在任何支持docker环境的系统中运行啦！-译者按：是不是很神奇呢？-让我们来体验一下吧！" class="headerlink" title="ok，到现在为止，你已经建立了一个完整的、自成体系的docker环境，并且安装了ping命令在里面。它可以在任何支持docker环境的系统中运行啦！(译者按：是不是很神奇呢？)让我们来体验一下吧！"></a>ok，到现在为止，你已经建立了一个完整的、自成体系的docker环境，并且安装了ping命令在里面。它可以在任何支持docker环境的系统中运行啦！(译者按：是不是很神奇呢？)让我们来体验一下吧！</h2><h2 id="目标：-5"><a href="#目标：-5" class="headerlink" title="目标："></a>目标：</h2><h2 id="在新的镜像中运行ping-www-google-com命令。"><a href="#在新的镜像中运行ping-www-google-com命令。" class="headerlink" title="在新的镜像中运行ping www.google.com命令。"></a>在新的镜像中运行ping <a target="_blank" rel="noopener" href="http://www.google.com/">www.google.com</a>命令。</h2><h2 id="提示：-5"><a href="#提示：-5" class="headerlink" title="提示："></a>提示：</h2><h2 id="一定要使用新的镜像名learn-ping来运行ping命令。-译者按：最开始下载的learn-tutorial镜像中是没有ping命令的"><a href="#一定要使用新的镜像名learn-ping来运行ping命令。-译者按：最开始下载的learn-tutorial镜像中是没有ping命令的" class="headerlink" title="一定要使用新的镜像名learn/ping来运行ping命令。(译者按：最开始下载的learn/tutorial镜像中是没有ping命令的)"></a>一定要使用新的镜像名learn/ping来运行ping命令。(译者按：最开始下载的learn/tutorial镜像中是没有ping命令的)</h2><p><img src="/2020/09/14/Docker%E5%AE%B9%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8/docker9.png" alt="未知_8.png"></p>
+<h2 id="查看所有的容器列表的命令是：docker-ps-a-，显示最近一个容器的命令是：docker-ps-l，更新太快了"><a href="#查看所有的容器列表的命令是：docker-ps-a-，显示最近一个容器的命令是：docker-ps-l，更新太快了" class="headerlink" title="查看所有的容器列表的命令是：docker ps -a ，显示最近一个容器的命令是：docker ps -l，更新太快了- -"></a>查看所有的容器列表的命令是：docker ps -a ，显示最近一个容器的命令是：docker ps -l，更新太快了- -</h2><p><img src="/2020/09/14/Docker%E5%AE%B9%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8/docker10.png" alt="未知_9.png"></p>
+<h2 id="发布docker镜像"><a href="#发布docker镜像" class="headerlink" title="发布docker镜像"></a>发布docker镜像</h2><h2 id="现在我们已经验证了新镜像可以正常工作，下一步我们可以将其发布到官方的索引网站。还记得我们最开始下载的learn-tutorial镜像吧，我们也可以把我们自己编译的镜像发布到索引页面，一方面可以自己重用，另一方面也可以分享给其他人使用。"><a href="#现在我们已经验证了新镜像可以正常工作，下一步我们可以将其发布到官方的索引网站。还记得我们最开始下载的learn-tutorial镜像吧，我们也可以把我们自己编译的镜像发布到索引页面，一方面可以自己重用，另一方面也可以分享给其他人使用。" class="headerlink" title="现在我们已经验证了新镜像可以正常工作，下一步我们可以将其发布到官方的索引网站。还记得我们最开始下载的learn/tutorial镜像吧，我们也可以把我们自己编译的镜像发布到索引页面，一方面可以自己重用，另一方面也可以分享给其他人使用。"></a>现在我们已经验证了新镜像可以正常工作，下一步我们可以将其发布到官方的索引网站。还记得我们最开始下载的learn/tutorial镜像吧，我们也可以把我们自己编译的镜像发布到索引页面，一方面可以自己重用，另一方面也可以分享给其他人使用。</h2><h2 id=""><a href="#" class="headerlink" title=""></a></h2><h2 id="runoob-runoob-docker-run-d-P-training-webapp-python-app-py"><a href="#runoob-runoob-docker-run-d-P-training-webapp-python-app-py" class="headerlink" title="runoob@runoob:~# docker run -d -P training/webapp python app.py"></a>runoob@runoob:~# docker run -d -P training/webapp python app.py</h2><h2 id="d-让容器在后台运行。"><a href="#d-让容器在后台运行。" class="headerlink" title="-d:让容器在后台运行。"></a>-d:让容器在后台运行。</h2><h2 id="P-将容器内部使用的网络端口映射到我们使用的主机上。"><a href="#P-将容器内部使用的网络端口映射到我们使用的主机上。" class="headerlink" title="-P:将容器内部使用的网络端口映射到我们使用的主机上。"></a>-P:将容器内部使用的网络端口映射到我们使用的主机上。</h2><h2 id="docker-logs-ID或者名字-可以查看容器内部的标准输出。"><a href="#docker-logs-ID或者名字-可以查看容器内部的标准输出。" class="headerlink" title="docker logs [ID或者名字] 可以查看容器内部的标准输出。"></a>docker logs [ID或者名字] 可以查看容器内部的标准输出。</h2><h2 id="停止运行"><a href="#停止运行" class="headerlink" title="停止运行"></a>停止运行</h2><p>runoob@runoob:~$ docker stop wizardly_chandrasekhar</p>
+<h2 id="我们可以使用-docker-rm-命令来删除不需要的容器-删除容器时，容器必须是停止状态"><a href="#我们可以使用-docker-rm-命令来删除不需要的容器-删除容器时，容器必须是停止状态" class="headerlink" title="我们可以使用 docker rm 命令来删除不需要的容器 删除容器时，容器必须是停止状态"></a>我们可以使用 docker rm 命令来删除不需要的容器 删除容器时，容器必须是停止状态</h2><p>runoob@runoob:~$ docker rm wizardly_chandrasekhar</p>
+<h2 id="docker-run-只在第一次运行时使用，将镜像放到容器中，以后再次启动这个容器时，只需要使用命令docker-start-即可。"><a href="#docker-run-只在第一次运行时使用，将镜像放到容器中，以后再次启动这个容器时，只需要使用命令docker-start-即可。" class="headerlink" title="docker run 只在第一次运行时使用，将镜像放到容器中，以后再次启动这个容器时，只需要使用命令docker start 即可。"></a>docker run 只在第一次运行时使用，将镜像放到容器中，以后再次启动这个容器时，只需要使用命令docker start 即可。</h2><p><strong>docker run**</strong>相当于执行了两步操作：将镜像放入容器中（**<strong>docker create**</strong>）**<strong>,**</strong>然后将容器启动，使之变成运行时容器（**<strong>docker start**</strong>）。**</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/docker/" rel="tag"># docker</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/09/14/MySQL%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7%E4%B8%8E%E6%8E%88%E6%9D%83/" rel="prev" title="MySQL创建用户与授权">
+      <i class="fa fa-chevron-left"></i> MySQL创建用户与授权
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker%E5%AE%B9%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">Docker容器的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker%E6%98%AF%E4%B8%80%E4%B8%AA%E5%BC%80%E6%BA%90%E7%9A%84%E5%BC%95%E6%93%8E%EF%BC%8C%E5%8F%AF%E4%BB%A5%E8%BD%BB%E6%9D%BE%E7%9A%84%E4%B8%BA%E4%BB%BB%E4%BD%95%E5%BA%94%E7%94%A8%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E8%BD%BB%E9%87%8F%E7%BA%A7%E7%9A%84%E3%80%81%E5%8F%AF%E7%A7%BB%E6%A4%8D%E7%9A%84%E3%80%81%E8%87%AA%E7%BB%99%E8%87%AA%E8%B6%B3%E7%9A%84%E5%AE%B9%E5%99%A8%E3%80%82%E5%BC%80%E5%8F%91%E8%80%85%E5%9C%A8%E7%AC%94%E8%AE%B0%E6%9C%AC%E4%B8%8A%E7%BC%96%E8%AF%91%E6%B5%8B%E8%AF%95%E9%80%9A%E8%BF%87%E7%9A%84%E5%AE%B9%E5%99%A8%E5%8F%AF%E4%BB%A5%E6%89%B9%E9%87%8F%E5%9C%B0%E5%9C%A8%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E4%B8%AD%E9%83%A8%E7%BD%B2%EF%BC%8C%E5%8C%85%E6%8B%ACVMs%EF%BC%88%E8%99%9A%E6%8B%9F%E6%9C%BA%EF%BC%89%E3%80%81bare-metal%E3%80%81OpenStack-%E9%9B%86%E7%BE%A4%E5%92%8C%E5%85%B6%E4%BB%96%E7%9A%84%E5%9F%BA%E7%A1%80%E5%BA%94%E7%94%A8%E5%B9%B3%E5%8F%B0%E3%80%82"><span class="nav-number">1.1.</span> <span class="nav-text">Docker是一个开源的引擎，可以轻松的为任何应用创建一个轻量级的、可移植的、自给自足的容器。开发者在笔记本上编译测试通过的容器可以批量地在生产环境中部署，包括VMs（虚拟机）、bare metal、OpenStack 集群和其他的基础应用平台。</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker%E9%80%9A%E5%B8%B8%E7%94%A8%E4%BA%8E%E5%A6%82%E4%B8%8B%E5%9C%BA%E6%99%AF%EF%BC%9A"><span class="nav-number">2.</span> <span class="nav-text">Docker通常用于如下场景：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker%E7%B3%BB%E7%BB%9F%E6%9C%89%E4%B8%A4%E4%B8%AA%E7%A8%8B%E5%BA%8F%EF%BC%9Adocker%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%92%8Cdocker%E5%AE%A2%E6%88%B7%E7%AB%AF%E3%80%82%E5%85%B6%E4%B8%ADdocker%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%98%AF%E4%B8%80%E4%B8%AA%E6%9C%8D%E5%8A%A1%E8%BF%9B%E7%A8%8B%EF%BC%8C%E7%AE%A1%E7%90%86%E7%9D%80%E6%89%80%E6%9C%89%E7%9A%84%E5%AE%B9%E5%99%A8%E3%80%82docker%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%88%99%E6%89%AE%E6%BC%94%E7%9D%80docker%E6%9C%8D%E5%8A%A1%E7%AB%AF%E7%9A%84%E8%BF%9C%E7%A8%8B%E6%8E%A7%E5%88%B6%E5%99%A8%EF%BC%8C%E5%8F%AF%E4%BB%A5%E7%94%A8%E6%9D%A5%E6%8E%A7%E5%88%B6docker%E7%9A%84%E6%9C%8D%E5%8A%A1%E7%AB%AF%E8%BF%9B%E7%A8%8B%E3%80%82%E5%A4%A7%E9%83%A8%E5%88%86%E6%83%85%E5%86%B5%E4%B8%8B%EF%BC%8Cdocker%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%92%8C%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%BF%90%E8%A1%8C%E5%9C%A8%E4%B8%80%E5%8F%B0%E6%9C%BA%E5%99%A8%E4%B8%8A%E3%80%82"><span class="nav-number">3.</span> <span class="nav-text">Docker系统有两个程序：docker服务端和docker客户端。其中docker服务端是一个服务进程，管理着所有的容器。docker客户端则扮演着docker服务端的远程控制器，可以用来控制docker的服务端进程。大部分情况下，docker服务端和客户端运行在一台机器上。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%90%9C%E7%B4%A2%E5%8F%AF%E7%94%A8%E7%9A%84docker%E9%95%9C%E5%83%8F"><span class="nav-number">4.</span> <span class="nav-text">搜索可用的docker镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8docker%E6%9C%80%E7%AE%80%E5%8D%95%E7%9A%84%E6%96%B9%E5%BC%8F%E8%8E%AB%E8%BF%87%E4%BA%8E%E4%BB%8E%E7%8E%B0%E6%9C%89%E7%9A%84%E5%AE%B9%E5%99%A8%E9%95%9C%E5%83%8F%E5%BC%80%E5%A7%8B%E3%80%82Docker%E5%AE%98%E6%96%B9%E7%BD%91%E7%AB%99%E4%B8%93%E9%97%A8%E6%9C%89%E4%B8%80%E4%B8%AA%E9%A1%B5%E9%9D%A2%E6%9D%A5%E5%AD%98%E5%82%A8%E6%89%80%E6%9C%89%E5%8F%AF%E7%94%A8%E7%9A%84%E9%95%9C%E5%83%8F%EF%BC%8C%E7%BD%91%E5%9D%80%E6%98%AF%EF%BC%9Aindex-docker-io%E3%80%82%E4%BD%A0%E5%8F%AF%E4%BB%A5%E9%80%9A%E8%BF%87%E6%B5%8F%E8%A7%88%E8%BF%99%E4%B8%AA%E7%BD%91%E9%A1%B5%E6%9D%A5%E6%9F%A5%E6%89%BE%E4%BD%A0%E6%83%B3%E8%A6%81%E4%BD%BF%E7%94%A8%E7%9A%84%E9%95%9C%E5%83%8F%EF%BC%8C%E6%88%96%E8%80%85%E4%BD%BF%E7%94%A8%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%9A%84%E5%B7%A5%E5%85%B7%E6%9D%A5%E6%A3%80%E7%B4%A2%E3%80%82"><span class="nav-number">5.</span> <span class="nav-text">使用docker最简单的方式莫过于从现有的容器镜像开始。Docker官方网站专门有一个页面来存储所有可用的镜像，网址是：index.docker.io。你可以通过浏览这个网页来查找你想要使用的镜像，或者使用命令行的工具来检索。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87%EF%BC%9A"><span class="nav-number">6.</span> <span class="nav-text">目标：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A6%E4%BC%9A%E4%BD%BF%E7%94%A8%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%9A%84%E5%B7%A5%E5%85%B7%E6%9D%A5%E6%A3%80%E7%B4%A2%E5%90%8D%E5%AD%97%E5%8F%AB%E5%81%9Atutorial%E7%9A%84%E9%95%9C%E5%83%8F%E3%80%82"><span class="nav-number">7.</span> <span class="nav-text">学会使用命令行的工具来检索名字叫做tutorial的镜像。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%90%E7%A4%BA%EF%BC%9A"><span class="nav-number">8.</span> <span class="nav-text">提示：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%9A%84%E6%A0%BC%E5%BC%8F%E4%B8%BA%EF%BC%9Adocker-search-%E9%95%9C%E5%83%8F%E5%90%8D%E5%AD%97"><span class="nav-number">9.</span> <span class="nav-text">命令行的格式为：docker search 镜像名字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A6%E4%BC%9A%E4%BD%BF%E7%94%A8docker%E5%91%BD%E4%BB%A4%E6%9D%A5%E4%B8%8B%E8%BD%BD%E9%95%9C%E5%83%8F"><span class="nav-number">10.</span> <span class="nav-text">学会使用docker命令来下载镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E9%95%9C%E5%83%8F%E7%9A%84%E5%91%BD%E4%BB%A4%E9%9D%9E%E5%B8%B8%E7%AE%80%E5%8D%95%EF%BC%8C%E4%BD%BF%E7%94%A8docker-pull%E5%91%BD%E4%BB%A4%E5%8D%B3%E5%8F%AF%E3%80%82-%E8%AF%91%E8%80%85%E6%8C%89%EF%BC%9Adocker%E5%91%BD%E4%BB%A4%E5%92%8Cgit%E6%9C%89%E4%B8%80%E4%BA%9B%E7%B1%BB%E4%BC%BC%E7%9A%84%E5%9C%B0%E6%96%B9%EF%BC%89%E3%80%82%E5%9C%A8docker%E7%9A%84%E9%95%9C%E5%83%8F%E7%B4%A2%E5%BC%95%E7%BD%91%E7%AB%99%E4%B8%8A%E9%9D%A2%EF%BC%8C%E9%95%9C%E5%83%8F%E9%83%BD%E6%98%AF%E6%8C%89%E7%85%A7-%E7%94%A8%E6%88%B7%E5%90%8D-%E9%95%9C%E5%83%8F%E5%90%8D%E7%9A%84%E6%96%B9%E5%BC%8F%E6%9D%A5%E5%AD%98%E5%82%A8%E7%9A%84%E3%80%82%E6%9C%89%E4%B8%80%E7%BB%84%E6%AF%94%E8%BE%83%E7%89%B9%E6%AE%8A%E7%9A%84%E9%95%9C%E5%83%8F%EF%BC%8C%E6%AF%94%E5%A6%82ubuntu%E8%BF%99%E7%B1%BB%E5%9F%BA%E7%A1%80%E9%95%9C%E5%83%8F%EF%BC%8C%E7%BB%8F%E8%BF%87%E5%AE%98%E6%96%B9%E7%9A%84%E9%AA%8C%E8%AF%81%EF%BC%8C%E5%80%BC%E5%BE%97%E4%BF%A1%E4%BB%BB%EF%BC%8C%E5%8F%AF%E4%BB%A5%E7%9B%B4%E6%8E%A5%E7%94%A8-%E9%95%9C%E5%83%8F%E5%90%8D%E6%9D%A5%E6%A3%80%E7%B4%A2%E5%88%B0%E3%80%82"><span class="nav-number">11.</span> <span class="nav-text">下载镜像的命令非常简单，使用docker pull命令即可。(译者按：docker命令和git有一些类似的地方）。在docker的镜像索引网站上面，镜像都是按照 用户名&#x2F; 镜像名的方式来存储的。有一组比较特殊的镜像，比如ubuntu这类基础镜像，经过官方的验证，值得信任，可以直接用 镜像名来检索到。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87%EF%BC%9A-1"><span class="nav-number">12.</span> <span class="nav-text">目标：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%9A%E8%BF%87docker%E5%91%BD%E4%BB%A4%E4%B8%8B%E8%BD%BDtutorial%E9%95%9C%E5%83%8F%E3%80%82"><span class="nav-number">13.</span> <span class="nav-text">通过docker命令下载tutorial镜像。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%90%E7%A4%BA%EF%BC%9A-1"><span class="nav-number">14.</span> <span class="nav-text">提示：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A7%E8%A1%8Cpull%E5%91%BD%E4%BB%A4%E7%9A%84%E6%97%B6%E5%80%99%E8%A6%81%E5%86%99%E5%AE%8C%E6%95%B4%E7%9A%84%E5%90%8D%E5%AD%97%EF%BC%8C%E6%AF%94%E5%A6%82%E2%80%9Dlearn-tutorial%E2%80%9D%E3%80%82"><span class="nav-number">15.</span> <span class="nav-text">执行pull命令的时候要写完整的名字，比如”learn&#x2F;tutorial”。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8docker%E5%AE%B9%E5%99%A8%E4%B8%AD%E8%BF%90%E8%A1%8Chello-world"><span class="nav-number">16.</span> <span class="nav-text">在docker容器中运行hello world!</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docker%E5%AE%B9%E5%99%A8%E5%8F%AF%E4%BB%A5%E7%90%86%E8%A7%A3%E4%B8%BA%E5%9C%A8%E6%B2%99%E7%9B%92%E4%B8%AD%E8%BF%90%E8%A1%8C%E7%9A%84%E8%BF%9B%E7%A8%8B%E3%80%82%E8%BF%99%E4%B8%AA%E6%B2%99%E7%9B%92%E5%8C%85%E5%90%AB%E4%BA%86%E8%AF%A5%E8%BF%9B%E7%A8%8B%E8%BF%90%E8%A1%8C%E6%89%80%E5%BF%85%E9%A1%BB%E7%9A%84%E8%B5%84%E6%BA%90%EF%BC%8C%E5%8C%85%E6%8B%AC%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E3%80%81%E7%B3%BB%E7%BB%9F%E7%B1%BB%E5%BA%93%E3%80%81shell-%E7%8E%AF%E5%A2%83%E7%AD%89%E7%AD%89%E3%80%82%E4%BD%86%E8%BF%99%E4%B8%AA%E6%B2%99%E7%9B%92%E9%BB%98%E8%AE%A4%E6%98%AF%E4%B8%8D%E4%BC%9A%E8%BF%90%E8%A1%8C%E4%BB%BB%E4%BD%95%E7%A8%8B%E5%BA%8F%E7%9A%84%E3%80%82%E4%BD%A0%E9%9C%80%E8%A6%81%E5%9C%A8%E6%B2%99%E7%9B%92%E4%B8%AD%E8%BF%90%E8%A1%8C%E4%B8%80%E4%B8%AA%E8%BF%9B%E7%A8%8B%E6%9D%A5%E5%90%AF%E5%8A%A8%E6%9F%90%E4%B8%80%E4%B8%AA%E5%AE%B9%E5%99%A8%E3%80%82%E8%BF%99%E4%B8%AA%E8%BF%9B%E7%A8%8B%E6%98%AF%E8%AF%A5%E5%AE%B9%E5%99%A8%E7%9A%84%E5%94%AF%E4%B8%80%E8%BF%9B%E7%A8%8B%EF%BC%8C%E6%89%80%E4%BB%A5%E5%BD%93%E8%AF%A5%E8%BF%9B%E7%A8%8B%E7%BB%93%E6%9D%9F%E7%9A%84%E6%97%B6%E5%80%99%EF%BC%8C%E5%AE%B9%E5%99%A8%E4%B9%9F%E4%BC%9A%E5%AE%8C%E5%85%A8%E7%9A%84%E5%81%9C%E6%AD%A2%E3%80%82"><span class="nav-number">17.</span> <span class="nav-text">docker容器可以理解为在沙盒中运行的进程。这个沙盒包含了该进程运行所必须的资源，包括文件系统、系统类库、shell 环境等等。但这个沙盒默认是不会运行任何程序的。你需要在沙盒中运行一个进程来启动某一个容器。这个进程是该容器的唯一进程，所以当该进程结束的时候，容器也会完全的停止。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87%EF%BC%9A-2"><span class="nav-number">18.</span> <span class="nav-text">目标：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E6%88%91%E4%BB%AC%E5%88%9A%E5%88%9A%E4%B8%8B%E8%BD%BD%E7%9A%84%E9%95%9C%E5%83%8F%E4%B8%AD%E8%BE%93%E5%87%BA%E2%80%9Dhello-word%E2%80%9D%E3%80%82%E4%B8%BA%E4%BA%86%E8%BE%BE%E5%88%B0%E8%BF%99%E4%B8%AA%E7%9B%AE%E7%9A%84%EF%BC%8C%E6%88%91%E4%BB%AC%E9%9C%80%E8%A6%81%E5%9C%A8%E8%BF%99%E4%B8%AA%E5%AE%B9%E5%99%A8%E4%B8%AD%E8%BF%90%E8%A1%8C%E2%80%9Decho%E2%80%9D%E5%91%BD%E4%BB%A4%EF%BC%8C%E8%BE%93%E5%87%BA%E2%80%9Dhello-word%E2%80%9D%E3%80%82"><span class="nav-number">19.</span> <span class="nav-text">在我们刚刚下载的镜像中输出”hello word”。为了达到这个目的，我们需要在这个容器中运行”echo”命令，输出”hello word”。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%90%E7%A4%BA%EF%BC%9A-2"><span class="nav-number">20.</span> <span class="nav-text">提示：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docker-run%E5%91%BD%E4%BB%A4%E6%9C%89%E4%B8%A4%E4%B8%AA%E5%8F%82%E6%95%B0%EF%BC%8C%E4%B8%80%E4%B8%AA%E6%98%AF%E9%95%9C%E5%83%8F%E5%90%8D%EF%BC%8C%E4%B8%80%E4%B8%AA%E6%98%AF%E8%A6%81%E5%9C%A8%E9%95%9C%E5%83%8F%E4%B8%AD%E8%BF%90%E8%A1%8C%E7%9A%84%E5%91%BD%E4%BB%A4%E3%80%82"><span class="nav-number">21.</span> <span class="nav-text">docker run命令有两个参数，一个是镜像名，一个是要在镜像中运行的命令。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E5%AE%B9%E5%99%A8%E4%B8%AD%E5%AE%89%E8%A3%85%E6%96%B0%E7%9A%84%E7%A8%8B%E5%BA%8F"><span class="nav-number">22.</span> <span class="nav-text">在容器中安装新的程序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E4%B8%80%E6%AD%A5%E6%88%91%E4%BB%AC%E8%A6%81%E5%81%9A%E7%9A%84%E4%BA%8B%E6%83%85%E6%98%AF%E5%9C%A8%E5%AE%B9%E5%99%A8%E9%87%8C%E9%9D%A2%E5%AE%89%E8%A3%85%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E7%A8%8B%E5%BA%8F-ping-%E3%80%82%E6%88%91%E4%BB%AC%E4%B9%8B%E5%89%8D%E4%B8%8B%E8%BD%BD%E7%9A%84tutorial%E9%95%9C%E5%83%8F%E6%98%AF%E5%9F%BA%E4%BA%8Eubuntu%E7%9A%84%EF%BC%8C%E6%89%80%E4%BB%A5%E4%BD%A0%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8ubuntu%E7%9A%84apt-get%E5%91%BD%E4%BB%A4%E6%9D%A5%E5%AE%89%E8%A3%85ping%E7%A8%8B%E5%BA%8F%EF%BC%9Aapt-get-install-y-ping%E3%80%82"><span class="nav-number">23.</span> <span class="nav-text">下一步我们要做的事情是在容器里面安装一个简单的程序(ping)。我们之前下载的tutorial镜像是基于ubuntu的，所以你可以使用ubuntu的apt-get命令来安装ping程序：apt-get install -y ping。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%87%E6%B3%A8%EF%BC%9Aapt-get-%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E5%AE%8C%E6%AF%95%E4%B9%8B%E5%90%8E%EF%BC%8C%E5%AE%B9%E5%99%A8%E5%B0%B1%E4%BC%9A%E5%81%9C%E6%AD%A2%EF%BC%8C%E4%BD%86%E5%AF%B9%E5%AE%B9%E5%99%A8%E7%9A%84%E6%94%B9%E5%8A%A8%E4%B8%8D%E4%BC%9A%E4%B8%A2%E5%A4%B1%E3%80%82"><span class="nav-number">24.</span> <span class="nav-text">备注：apt-get 命令执行完毕之后，容器就会停止，但对容器的改动不会丢失。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87%EF%BC%9A-3"><span class="nav-number">25.</span> <span class="nav-text">目标：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8learn-tutorial%E9%95%9C%E5%83%8F%E9%87%8C%E9%9D%A2%E5%AE%89%E8%A3%85ping%E7%A8%8B%E5%BA%8F%E3%80%82"><span class="nav-number">26.</span> <span class="nav-text">在learn&#x2F;tutorial镜像里面安装ping程序。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%90%E7%A4%BA%EF%BC%9A-3"><span class="nav-number">27.</span> <span class="nav-text">提示：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E6%89%A7%E8%A1%8Capt-get-%E5%91%BD%E4%BB%A4%E7%9A%84%E6%97%B6%E5%80%99%EF%BC%8C%E8%A6%81%E5%B8%A6%E4%B8%8A-y%E5%8F%82%E6%95%B0%E3%80%82%E5%A6%82%E6%9E%9C%E4%B8%8D%E6%8C%87%E5%AE%9A-y%E5%8F%82%E6%95%B0%E7%9A%84%E8%AF%9D%EF%BC%8Capt-get%E5%91%BD%E4%BB%A4%E4%BC%9A%E8%BF%9B%E5%85%A5%E4%BA%A4%E4%BA%92%E6%A8%A1%E5%BC%8F%EF%BC%8C%E9%9C%80%E8%A6%81%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5%E5%91%BD%E4%BB%A4%E6%9D%A5%E8%BF%9B%E8%A1%8C%E7%A1%AE%E8%AE%A4%EF%BC%8C%E4%BD%86%E5%9C%A8docker%E7%8E%AF%E5%A2%83%E4%B8%AD%E6%98%AF%E6%97%A0%E6%B3%95%E5%93%8D%E5%BA%94%E8%BF%99%E7%A7%8D%E4%BA%A4%E4%BA%92%E7%9A%84%E3%80%82"><span class="nav-number">28.</span> <span class="nav-text">在执行apt-get 命令的时候，要带上-y参数。如果不指定-y参数的话，apt-get命令会进入交互模式，需要用户输入命令来进行确认，但在docker环境中是无法响应这种交互的。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%9D%E5%AD%98%E5%AF%B9%E5%AE%B9%E5%99%A8%E7%9A%84%E4%BF%AE%E6%94%B9"><span class="nav-number">29.</span> <span class="nav-text">保存对容器的修改</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BD%93%E4%BD%A0%E5%AF%B9%E6%9F%90%E4%B8%80%E4%B8%AA%E5%AE%B9%E5%99%A8%E5%81%9A%E4%BA%86%E4%BF%AE%E6%94%B9%E4%B9%8B%E5%90%8E%EF%BC%88%E9%80%9A%E8%BF%87%E5%9C%A8%E5%AE%B9%E5%99%A8%E4%B8%AD%E8%BF%90%E8%A1%8C%E6%9F%90%E4%B8%80%E4%B8%AA%E5%91%BD%E4%BB%A4%EF%BC%89%EF%BC%8C%E5%8F%AF%E4%BB%A5%E6%8A%8A%E5%AF%B9%E5%AE%B9%E5%99%A8%E7%9A%84%E4%BF%AE%E6%94%B9%E4%BF%9D%E5%AD%98%E4%B8%8B%E6%9D%A5%EF%BC%8C%E8%BF%99%E6%A0%B7%E4%B8%8B%E6%AC%A1%E5%8F%AF%E4%BB%A5%E4%BB%8E%E4%BF%9D%E5%AD%98%E5%90%8E%E7%9A%84%E6%9C%80%E6%96%B0%E7%8A%B6%E6%80%81%E8%BF%90%E8%A1%8C%E8%AF%A5%E5%AE%B9%E5%99%A8%E3%80%82docker%E4%B8%AD%E4%BF%9D%E5%AD%98%E7%8A%B6%E6%80%81%E7%9A%84%E8%BF%87%E7%A8%8B%E7%A7%B0%E4%B9%8B%E4%B8%BAcommitting%EF%BC%8C%E5%AE%83%E4%BF%9D%E5%AD%98%E7%9A%84%E6%96%B0%E6%97%A7%E7%8A%B6%E6%80%81%E4%B9%8B%E9%97%B4%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%8C%E4%BB%8E%E8%80%8C%E4%BA%A7%E7%94%9F%E4%B8%80%E4%B8%AA%E6%96%B0%E7%9A%84%E7%89%88%E6%9C%AC%E3%80%82"><span class="nav-number">30.</span> <span class="nav-text">当你对某一个容器做了修改之后（通过在容器中运行某一个命令），可以把对容器的修改保存下来，这样下次可以从保存后的最新状态运行该容器。docker中保存状态的过程称之为committing，它保存的新旧状态之间的区别，从而产生一个新的版本。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87%EF%BC%9A-4"><span class="nav-number">31.</span> <span class="nav-text">目标：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A6%96%E5%85%88%E4%BD%BF%E7%94%A8docker-ps-l%E5%91%BD%E4%BB%A4%E8%8E%B7%E5%BE%97%E5%AE%89%E8%A3%85%E5%AE%8Cping%E5%91%BD%E4%BB%A4%E4%B9%8B%E5%90%8E%E5%AE%B9%E5%99%A8%E7%9A%84id%E3%80%82%E7%84%B6%E5%90%8E%E6%8A%8A%E8%BF%99%E4%B8%AA%E9%95%9C%E5%83%8F%E4%BF%9D%E5%AD%98%E4%B8%BAlearn-ping%E3%80%82"><span class="nav-number">32.</span> <span class="nav-text">首先使用docker ps -l命令获得安装完ping命令之后容器的id。然后把这个镜像保存为learn&#x2F;ping。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%90%E7%A4%BA%EF%BC%9A-4"><span class="nav-number">33.</span> <span class="nav-text">提示：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E8%BF%90%E8%A1%8Cdocker-commit%EF%BC%8C%E5%8F%AF%E4%BB%A5%E6%9F%A5%E7%9C%8B%E8%AF%A5%E5%91%BD%E4%BB%A4%E7%9A%84%E5%8F%82%E6%95%B0%E5%88%97%E8%A1%A8%E3%80%82"><span class="nav-number">34.</span> <span class="nav-text">1. 运行docker commit，可以查看该命令的参数列表。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E4%BD%A0%E9%9C%80%E8%A6%81%E6%8C%87%E5%AE%9A%E8%A6%81%E6%8F%90%E4%BA%A4%E4%BF%9D%E5%AD%98%E5%AE%B9%E5%99%A8%E7%9A%84ID%E3%80%82-%E8%AF%91%E8%80%85%E6%8C%89%EF%BC%9A%E9%80%9A%E8%BF%87docker-ps-l-%E5%91%BD%E4%BB%A4%E8%8E%B7%E5%BE%97"><span class="nav-number">35.</span> <span class="nav-text">2. 你需要指定要提交保存容器的ID。(译者按：通过docker ps -l 命令获得)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%97%A0%E9%9C%80%E6%8B%B7%E8%B4%9D%E5%AE%8C%E6%95%B4%E7%9A%84id%EF%BC%8C%E9%80%9A%E5%B8%B8%E6%9D%A5%E8%AE%B2%E6%9C%80%E5%BC%80%E5%A7%8B%E7%9A%84%E4%B8%89%E8%87%B3%E5%9B%9B%E4%B8%AA%E5%AD%97%E6%AF%8D%E5%8D%B3%E5%8F%AF%E5%8C%BA%E5%88%86%E3%80%82%EF%BC%88%E8%AF%91%E8%80%85%E6%8C%89%EF%BC%9A%E9%9D%9E%E5%B8%B8%E7%B1%BB%E4%BC%BCgit%E9%87%8C%E9%9D%A2%E7%9A%84%E7%89%88%E6%9C%AC%E5%8F%B7"><span class="nav-number">36.</span> <span class="nav-text">3. 无需拷贝完整的id，通常来讲最开始的三至四个字母即可区分。（译者按：非常类似git里面的版本号)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E6%96%B0%E7%9A%84%E9%95%9C%E5%83%8F"><span class="nav-number">37.</span> <span class="nav-text">运行新的镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ok%EF%BC%8C%E5%88%B0%E7%8E%B0%E5%9C%A8%E4%B8%BA%E6%AD%A2%EF%BC%8C%E4%BD%A0%E5%B7%B2%E7%BB%8F%E5%BB%BA%E7%AB%8B%E4%BA%86%E4%B8%80%E4%B8%AA%E5%AE%8C%E6%95%B4%E7%9A%84%E3%80%81%E8%87%AA%E6%88%90%E4%BD%93%E7%B3%BB%E7%9A%84docker%E7%8E%AF%E5%A2%83%EF%BC%8C%E5%B9%B6%E4%B8%94%E5%AE%89%E8%A3%85%E4%BA%86ping%E5%91%BD%E4%BB%A4%E5%9C%A8%E9%87%8C%E9%9D%A2%E3%80%82%E5%AE%83%E5%8F%AF%E4%BB%A5%E5%9C%A8%E4%BB%BB%E4%BD%95%E6%94%AF%E6%8C%81docker%E7%8E%AF%E5%A2%83%E7%9A%84%E7%B3%BB%E7%BB%9F%E4%B8%AD%E8%BF%90%E8%A1%8C%E5%95%A6%EF%BC%81-%E8%AF%91%E8%80%85%E6%8C%89%EF%BC%9A%E6%98%AF%E4%B8%8D%E6%98%AF%E5%BE%88%E7%A5%9E%E5%A5%87%E5%91%A2%EF%BC%9F-%E8%AE%A9%E6%88%91%E4%BB%AC%E6%9D%A5%E4%BD%93%E9%AA%8C%E4%B8%80%E4%B8%8B%E5%90%A7%EF%BC%81"><span class="nav-number">38.</span> <span class="nav-text">ok，到现在为止，你已经建立了一个完整的、自成体系的docker环境，并且安装了ping命令在里面。它可以在任何支持docker环境的系统中运行啦！(译者按：是不是很神奇呢？)让我们来体验一下吧！</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87%EF%BC%9A-5"><span class="nav-number">39.</span> <span class="nav-text">目标：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E6%96%B0%E7%9A%84%E9%95%9C%E5%83%8F%E4%B8%AD%E8%BF%90%E8%A1%8Cping-www-google-com%E5%91%BD%E4%BB%A4%E3%80%82"><span class="nav-number">40.</span> <span class="nav-text">在新的镜像中运行ping www.google.com命令。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%90%E7%A4%BA%EF%BC%9A-5"><span class="nav-number">41.</span> <span class="nav-text">提示：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E5%AE%9A%E8%A6%81%E4%BD%BF%E7%94%A8%E6%96%B0%E7%9A%84%E9%95%9C%E5%83%8F%E5%90%8Dlearn-ping%E6%9D%A5%E8%BF%90%E8%A1%8Cping%E5%91%BD%E4%BB%A4%E3%80%82-%E8%AF%91%E8%80%85%E6%8C%89%EF%BC%9A%E6%9C%80%E5%BC%80%E5%A7%8B%E4%B8%8B%E8%BD%BD%E7%9A%84learn-tutorial%E9%95%9C%E5%83%8F%E4%B8%AD%E6%98%AF%E6%B2%A1%E6%9C%89ping%E5%91%BD%E4%BB%A4%E7%9A%84"><span class="nav-number">42.</span> <span class="nav-text">一定要使用新的镜像名learn&#x2F;ping来运行ping命令。(译者按：最开始下载的learn&#x2F;tutorial镜像中是没有ping命令的)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%89%80%E6%9C%89%E7%9A%84%E5%AE%B9%E5%99%A8%E5%88%97%E8%A1%A8%E7%9A%84%E5%91%BD%E4%BB%A4%E6%98%AF%EF%BC%9Adocker-ps-a-%EF%BC%8C%E6%98%BE%E7%A4%BA%E6%9C%80%E8%BF%91%E4%B8%80%E4%B8%AA%E5%AE%B9%E5%99%A8%E7%9A%84%E5%91%BD%E4%BB%A4%E6%98%AF%EF%BC%9Adocker-ps-l%EF%BC%8C%E6%9B%B4%E6%96%B0%E5%A4%AA%E5%BF%AB%E4%BA%86"><span class="nav-number">43.</span> <span class="nav-text">查看所有的容器列表的命令是：docker ps -a ，显示最近一个容器的命令是：docker ps -l，更新太快了- -</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%91%E5%B8%83docker%E9%95%9C%E5%83%8F"><span class="nav-number">44.</span> <span class="nav-text">发布docker镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%B0%E5%9C%A8%E6%88%91%E4%BB%AC%E5%B7%B2%E7%BB%8F%E9%AA%8C%E8%AF%81%E4%BA%86%E6%96%B0%E9%95%9C%E5%83%8F%E5%8F%AF%E4%BB%A5%E6%AD%A3%E5%B8%B8%E5%B7%A5%E4%BD%9C%EF%BC%8C%E4%B8%8B%E4%B8%80%E6%AD%A5%E6%88%91%E4%BB%AC%E5%8F%AF%E4%BB%A5%E5%B0%86%E5%85%B6%E5%8F%91%E5%B8%83%E5%88%B0%E5%AE%98%E6%96%B9%E7%9A%84%E7%B4%A2%E5%BC%95%E7%BD%91%E7%AB%99%E3%80%82%E8%BF%98%E8%AE%B0%E5%BE%97%E6%88%91%E4%BB%AC%E6%9C%80%E5%BC%80%E5%A7%8B%E4%B8%8B%E8%BD%BD%E7%9A%84learn-tutorial%E9%95%9C%E5%83%8F%E5%90%A7%EF%BC%8C%E6%88%91%E4%BB%AC%E4%B9%9F%E5%8F%AF%E4%BB%A5%E6%8A%8A%E6%88%91%E4%BB%AC%E8%87%AA%E5%B7%B1%E7%BC%96%E8%AF%91%E7%9A%84%E9%95%9C%E5%83%8F%E5%8F%91%E5%B8%83%E5%88%B0%E7%B4%A2%E5%BC%95%E9%A1%B5%E9%9D%A2%EF%BC%8C%E4%B8%80%E6%96%B9%E9%9D%A2%E5%8F%AF%E4%BB%A5%E8%87%AA%E5%B7%B1%E9%87%8D%E7%94%A8%EF%BC%8C%E5%8F%A6%E4%B8%80%E6%96%B9%E9%9D%A2%E4%B9%9F%E5%8F%AF%E4%BB%A5%E5%88%86%E4%BA%AB%E7%BB%99%E5%85%B6%E4%BB%96%E4%BA%BA%E4%BD%BF%E7%94%A8%E3%80%82"><span class="nav-number">45.</span> <span class="nav-text">现在我们已经验证了新镜像可以正常工作，下一步我们可以将其发布到官方的索引网站。还记得我们最开始下载的learn&#x2F;tutorial镜像吧，我们也可以把我们自己编译的镜像发布到索引页面，一方面可以自己重用，另一方面也可以分享给其他人使用。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">46.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#runoob-runoob-docker-run-d-P-training-webapp-python-app-py"><span class="nav-number">47.</span> <span class="nav-text">runoob@runoob:~# docker run -d -P training&#x2F;webapp python app.py</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#d-%E8%AE%A9%E5%AE%B9%E5%99%A8%E5%9C%A8%E5%90%8E%E5%8F%B0%E8%BF%90%E8%A1%8C%E3%80%82"><span class="nav-number">48.</span> <span class="nav-text">-d:让容器在后台运行。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#P-%E5%B0%86%E5%AE%B9%E5%99%A8%E5%86%85%E9%83%A8%E4%BD%BF%E7%94%A8%E7%9A%84%E7%BD%91%E7%BB%9C%E7%AB%AF%E5%8F%A3%E6%98%A0%E5%B0%84%E5%88%B0%E6%88%91%E4%BB%AC%E4%BD%BF%E7%94%A8%E7%9A%84%E4%B8%BB%E6%9C%BA%E4%B8%8A%E3%80%82"><span class="nav-number">49.</span> <span class="nav-text">-P:将容器内部使用的网络端口映射到我们使用的主机上。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docker-logs-ID%E6%88%96%E8%80%85%E5%90%8D%E5%AD%97-%E5%8F%AF%E4%BB%A5%E6%9F%A5%E7%9C%8B%E5%AE%B9%E5%99%A8%E5%86%85%E9%83%A8%E7%9A%84%E6%A0%87%E5%87%86%E8%BE%93%E5%87%BA%E3%80%82"><span class="nav-number">50.</span> <span class="nav-text">docker logs [ID或者名字] 可以查看容器内部的标准输出。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%81%9C%E6%AD%A2%E8%BF%90%E8%A1%8C"><span class="nav-number">51.</span> <span class="nav-text">停止运行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E4%BB%AC%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8-docker-rm-%E5%91%BD%E4%BB%A4%E6%9D%A5%E5%88%A0%E9%99%A4%E4%B8%8D%E9%9C%80%E8%A6%81%E7%9A%84%E5%AE%B9%E5%99%A8-%E5%88%A0%E9%99%A4%E5%AE%B9%E5%99%A8%E6%97%B6%EF%BC%8C%E5%AE%B9%E5%99%A8%E5%BF%85%E9%A1%BB%E6%98%AF%E5%81%9C%E6%AD%A2%E7%8A%B6%E6%80%81"><span class="nav-number">52.</span> <span class="nav-text">我们可以使用 docker rm 命令来删除不需要的容器 删除容器时，容器必须是停止状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docker-run-%E5%8F%AA%E5%9C%A8%E7%AC%AC%E4%B8%80%E6%AC%A1%E8%BF%90%E8%A1%8C%E6%97%B6%E4%BD%BF%E7%94%A8%EF%BC%8C%E5%B0%86%E9%95%9C%E5%83%8F%E6%94%BE%E5%88%B0%E5%AE%B9%E5%99%A8%E4%B8%AD%EF%BC%8C%E4%BB%A5%E5%90%8E%E5%86%8D%E6%AC%A1%E5%90%AF%E5%8A%A8%E8%BF%99%E4%B8%AA%E5%AE%B9%E5%99%A8%E6%97%B6%EF%BC%8C%E5%8F%AA%E9%9C%80%E8%A6%81%E4%BD%BF%E7%94%A8%E5%91%BD%E4%BB%A4docker-start-%E5%8D%B3%E5%8F%AF%E3%80%82"><span class="nav-number">53.</span> <span class="nav-text">docker run 只在第一次运行时使用，将镜像放到容器中，以后再次启动这个容器时，只需要使用命令docker start 即可。</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">归海一刀</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/DJPY" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;DJPY" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:dj.player.2020@gmail.com" title="E-Mail → mailto:dj.player.2020@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://www.djplayer.top/" title="http:&#x2F;&#x2F;www.djplayer.top" rel="noopener" target="_blank">曾经的网站(域名过期)</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">归海一刀</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+    <script defer src="/lib/three/canvas_lines.min.js"></script>
+    <script defer src="/lib/three/canvas_sphere.min.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
