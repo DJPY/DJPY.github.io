@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="JavaScript 文件对象详解在浏览器中操作文件，多数情况下用到的是 File 对象，从 &lt;input type&#x3D;&#39;file&#39; &#x2F;&gt; 元素获取，进而继续操作(例如将选择的图片展示在页面上，用ajax将文件上传至服务器等)。这里介绍在浏览器中操作文件的相关API. File 对象继承自 Blob 对象，先看看 Blob 对象。 1. Blob 对象Blob 对象表示一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript文件对象详解">
+<meta property="og:url" content="http://example.com/2020/09/18/JavaScript%E6%96%87%E4%BB%B6%E5%AF%B9%E8%B1%A1%E8%AF%A6%E8%A7%A3/index.html">
+<meta property="og:site_name" content="地字第一号">
+<meta property="og:description" content="JavaScript 文件对象详解在浏览器中操作文件，多数情况下用到的是 File 对象，从 &lt;input type&#x3D;&#39;file&#39; &#x2F;&gt; 元素获取，进而继续操作(例如将选择的图片展示在页面上，用ajax将文件上传至服务器等)。这里介绍在浏览器中操作文件的相关API. File 对象继承自 Blob 对象，先看看 Blob 对象。 1. Blob 对象Blob 对象表示一">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-09-18T08:34:45.000Z">
+<meta property="article:modified_time" content="2020-09-18T08:36:29.711Z">
+<meta property="article:author" content="归海一刀">
+<meta property="article:tag" content="file">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2020/09/18/JavaScript%E6%96%87%E4%BB%B6%E5%AF%B9%E8%B1%A1%E8%AF%A6%E8%A7%A3/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>JavaScript文件对象详解 | 地字第一号</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="地字第一号" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">地字第一号</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">重庆·嘉陵江·望江阁</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/09/18/JavaScript%E6%96%87%E4%BB%B6%E5%AF%B9%E8%B1%A1%E8%AF%A6%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="归海一刀">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="地字第一号">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JavaScript文件对象详解
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-09-18 16:34:45 / 修改时间：16:36:29" itemprop="dateCreated datePublished" datetime="2020-09-18T16:34:45+08:00">2020-09-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index"><span itemprop="name">javascript</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="JavaScript-文件对象详解"><a href="#JavaScript-文件对象详解" class="headerlink" title="JavaScript 文件对象详解"></a>JavaScript 文件对象详解</h1><p>在浏览器中操作文件，多数情况下用到的是 <code>File</code> 对象，从 <code>&lt;input type=&#39;file&#39; /&gt;</code> 元素获取，进而继续操作(例如将选择的图片展示在页面上，用ajax将文件上传至服务器等)。这里介绍在浏览器中操作文件的相关API.</p>
+<p><code>File</code> 对象继承自 <code>Blob</code> 对象，先看看 <code>Blob</code> 对象。</p>
+<h2 id="1-Blob-对象"><a href="#1-Blob-对象" class="headerlink" title="1. Blob 对象"></a>1. Blob 对象</h2><p><code>Blob</code> 对象表示一个不可变、原始数据的类文件对象。Blob 表示的不一定是JavaScript原生格式的数据。</p>
+<h3 id="Blob构造函数-Blob-array-options"><a href="#Blob构造函数-Blob-array-options" class="headerlink" title="Blob构造函数 Blob(array[, options])"></a>Blob构造函数 Blob(array[, options])</h3><ul>
+<li>array 是一个由ArrayBuffer, ArrayBufferView, Blob, string 等对象构成的 Array ，或者其他类似对象的混合体，它将会被放进 Blob。string会被编码为UTF-8。</li>
+<li>options 是一个可选的对象，它可能会指定如下两个属性：<ul>
+<li>type，默认值为 “”，它代表了将会被放入到blob中的数组内容的<a href="https://link.juejin.im/?target=https://www.iana.org/assignments/media-types/media-types.xhtml"><code>MIME</code>类型</a>。</li>
+<li>endings，默认值为”transparent”，用于指定包含行结束符\n的字符串如何被写入。 它是以下两个值中的一个： “native”，代表行结束符会被更改为适合宿主操作系统文件系统的换行符，或者 “transparent”，代表会保持blob中保存的结束符不变。</li>
+</ul>
+</li>
+</ul>
+<p>示例:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> content1 = [<span class="string">&#x27;This is my firt trip to an island&#x27;</span>];</span><br><span class="line"><span class="keyword">var</span> blob1 = <span class="keyword">new</span> Blob(content, &#123;<span class="attr">type</span>: <span class="string">&#x27;text/plain&#x27;</span>&#125;);</span><br><span class="line"><span class="keyword">var</span> content2 = &#123;<span class="attr">name</span>: <span class="string">&#x27;Alice&#x27;</span>, <span class="attr">age</span>: <span class="number">23</span>&#125;;</span><br><span class="line"><span class="keyword">var</span> blob2 = <span class="keyword">new</span> Blob([<span class="built_in">JSON</span>.stringify(content2, <span class="literal">null</span>, <span class="number">2</span>)], &#123;<span class="attr">type</span>: <span class="string">&#x27;application/json&#x27;</span>&#125;);</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+
+<h3 id="Blob实例属性"><a href="#Blob实例属性" class="headerlink" title="Blob实例属性"></a>Blob实例属性</h3><table>
+<thead>
+<tr>
+<th align="left">属性名称</th>
+<th align="left">读/写</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">size</td>
+<td align="left">只读</td>
+<td align="left"><code>Blob</code> 对象中所包含数据的大小（字节）。</td>
+</tr>
+<tr>
+<td align="left">type</td>
+<td align="left">只读</td>
+<td align="left">一个字符串，表明该Blob对象所包含数据的<a href="https://link.juejin.im/?target=https://www.iana.org/assignments/media-types/media-types.xhtml"><code>MIME</code>类型</a>。如果类型未知，则该值为空字符串。例如 “image/png”.</td>
+</tr>
+</tbody></table>
+<p>示例:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> content = [<span class="string">&#x27;&lt;div id=&quot;box&quot;&gt;&lt;p class=&quot;pra&quot;&gt;a paragraph&lt;/p&gt;&lt;/div&gt;&#x27;</span>];</span><br><span class="line"><span class="keyword">var</span> blob = <span class="keyword">new</span> Blob(content, &#123;<span class="attr">type</span>: <span class="string">&#x27;text/html&#x27;</span>&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(blob.size); <span class="comment">// 50</span></span><br><span class="line"><span class="built_in">console</span>.log(blob.type); <span class="comment">// text/html</span></span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+
+<h3 id="Blob实例方法"><a href="#Blob实例方法" class="headerlink" title="Blob实例方法"></a>Blob实例方法</h3><ul>
+<li>slice([start[, end[, contentType]]])</li>
+</ul>
+<p><code>slice</code> 方法接收三个可选参数，<code>start</code> 和 <code>end</code> 都是数值，表示截取的范围，<code>contentType</code> 指定截取的内容的 <code>MIME</code> 类型。返回一个新的 <code>Blob</code>对象。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> blob = <span class="keyword">new</span> Blob([<span class="string">&#x27;This is an example of Blob slice method&#x27;</span>], &#123;<span class="attr">type</span>: <span class="string">&#x27;text/plain&#x27;</span>&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(blob.size); <span class="comment">// 39</span></span><br><span class="line"><span class="keyword">var</span> newBlob = blob.slice(<span class="number">10</span>, <span class="number">20</span>, <span class="string">&#x27;text/plain&#x27;</span>);</span><br><span class="line"><span class="built_in">console</span>.log(newBlob.size); <span class="comment">// 10</span></span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+
+<p>从 <code>Blob</code> 对象中读取内容可以使用 <code>FileReader</code>. 下文会介绍。</p>
+<h2 id="2-File-对象"><a href="#2-File-对象" class="headerlink" title="2. File 对象"></a>2. File 对象</h2><h3 id="File构造函数"><a href="#File构造函数" class="headerlink" title="File构造函数"></a>File构造函数</h3><p>我们接触的多数关于 <code>File</code> 的操作都是读取，js也为我们提供了手动创建 <code>File</code> 对象的构造函数：<code>File(bits, name[, options])</code>。</p>
+<ul>
+<li>bits (required) ArrayBuffer，ArrayBufferView，Blob，或者 Array[string] — 或者任何这些对象的组合。这是 UTF-8 编码的文件内容。。</li>
+<li>name [String] (required) 文件名称，或者文件路径.</li>
+<li>options [Object] (optional) 选项对象，包含文件的可选属性。可用的选项如下：<ul>
+<li><code>type</code>: string, 表示将要放到文件中的内容的<a href="https://link.juejin.im/?target=https://www.iana.org/assignments/media-types/media-types.xhtml"><code>MIME</code>类型</a>。默认值为 ‘’ 。</li>
+<li><code>lastModified</code>: 数值，表示文件最后修改时间的 Unix 时间戳（毫秒）。默认值为 Date.now()。</li>
+</ul>
+</li>
+</ul>
+<p>示例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> file1 = <span class="keyword">new</span> File([<span class="string">&#x27;text1&#x27;</span>, <span class="string">&#x27;text2&#x27;</span>], <span class="string">&#x27;test.txt&#x27;</span>, &#123;<span class="attr">type</span>: <span class="string">&#x27;text/plain&#x27;</span>&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>根据已有的 <code>blob</code> 对象创建 <code>File</code> 对象:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> file2 = <span class="keyword">new</span> File([blob], <span class="string">&#x27;test.png&#x27;</span>, &#123;<span class="attr">type</span>: <span class="string">&#x27;image/png&#x27;</span>&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="File实例属性"><a href="#File实例属性" class="headerlink" title="File实例属性"></a>File实例属性</h3><p><code>File</code> 对象的实例内容不可见，但是有以下属性可以访问:</p>
+<table>
+<thead>
+<tr>
+<th align="left">属性名称</th>
+<th align="left">读/写</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">name</td>
+<td align="left">只读</td>
+<td align="left">返回文件的名称.由于安全原因,返回的值并不包含文件路径 。</td>
+</tr>
+<tr>
+<td align="left">type</td>
+<td align="left">只读</td>
+<td align="left">返回 <code>File</code> 对象所表示文件的媒体类型（MIME）。例如 PNG 图像是 “image/png”.</td>
+</tr>
+<tr>
+<td align="left">lastModified</td>
+<td align="left">只读</td>
+<td align="left">number, 返回所引用文件最后修改日期,自 1970年1月1日0:00 以来的毫秒数。</td>
+</tr>
+<tr>
+<td align="left">lastModifiedDate</td>
+<td align="left">只读</td>
+<td align="left">Date, 返回当前文件的最后修改日期,如果无法获取到文件的最后修改日期,则使用当前日期来替代。</td>
+</tr>
+</tbody></table>
+<p>示例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=<span class="string">&quot;file&quot;</span> id=<span class="string">&#x27;file&#x27;</span>&gt;</span><br><span class="line"><span class="built_in">document</span>.getElementById(<span class="string">&#x27;file&#x27;</span>).addEventListener(<span class="string">&#x27;change&#x27;</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">const</span> file = <span class="built_in">this</span>.files[<span class="number">0</span>];</span><br><span class="line">  <span class="keyword">if</span> (file) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(file.name);</span><br><span class="line">    <span class="built_in">console</span>.log(file.size);</span><br><span class="line">    <span class="built_in">console</span>.log(file.lastModified);</span><br><span class="line">    <span class="built_in">console</span>.log(file.lastModifiedDate);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><strong>备注:</strong> 基于当前的实现，浏览器不会实际读取文件的字节流，来判断它的媒体类型。它基于文件扩展来假设；将PNG 图像文件的后缀名重命名为 <code>.txt</code>，那么读取的该文件的 <code>type</code> 属性值为 “text/plain”， 而不是 “image/png” 。而且，<code>file.type</code> 仅仅对常见文件类型可靠。例如图像、文档、音频和视频。不常见的文件扩展名会返回空字符串。开发者最好不要依靠这个属性，作为唯一的验证方案。</p>
+<h3 id="File实例方法"><a href="#File实例方法" class="headerlink" title="File实例方法"></a>File实例方法</h3><ul>
+<li>slice([start[, end[, contentType]]])</li>
+</ul>
+<p><code>File</code> 对象没有定义额外的方法，由于继承了 <code>Blob</code> 对象，也就继承了 <code>slice</code>方法，用法同上文 <code>Blob</code> 的 <code>slice</code> 方法。</p>
+<p>FileReader, URL.createObjectURL(), createImageBitmap(), 及 XMLHttpRequest.send() 都能处理 Blob 和 File。</p>
+<h2 id="3-FileReader-对象"><a href="#3-FileReader-对象" class="headerlink" title="3. FileReader 对象"></a>3. FileReader 对象</h2><blockquote>
+<p><code>FileReader</code> 对象允许Web应用程序异步读取存储在用户计算机上的文件（或原始数据缓冲区）的内容，使用 <code>File</code> 或 <code>Blob</code> 对象指定要读取的文件或数据。</p>
+</blockquote>
+<p>其中 <code>File</code> 对象可以是来自用户在一个 <code>&lt;input&gt;</code> 元素上选择文件后返回的 <code>FileList</code>, 也可以来自拖放操作生成的 <code>DataTransfer</code> 对象,还可以是来自在一个 <code>HTMLCanvasElement</code> 上执行 <code>mozGetAsFile()</code> 方法后返回结果。</p>
+<h3 id="FileReader构造函数"><a href="#FileReader构造函数" class="headerlink" title="FileReader构造函数"></a>FileReader构造函数</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> reader = <span class="keyword">new</span> FileReader()</span><br></pre></td></tr></table></figure>
+
+<p>构造函数不需要传入参数，返回一个 <code>FileReader</code> 的实例。<code>FileReader</code> 继承 <code>EventTarget</code>对象。</p>
+<h3 id="FileReader实例属性"><a href="#FileReader实例属性" class="headerlink" title="FileReader实例属性"></a>FileReader实例属性</h3><table>
+<thead>
+<tr>
+<th align="left">属性名称</th>
+<th align="left">读/写</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">error</td>
+<td align="left">只读</td>
+<td align="left"><code>DOMException</code> 的实例，表示在读取文件时发生的错误 。</td>
+</tr>
+<tr>
+<td align="left">result</td>
+<td align="left">只读</td>
+<td align="left">文件的内容，该属性仅在读取操作完成后(load)后才有效，格式取决于读取方法</td>
+</tr>
+<tr>
+<td align="left">readyState</td>
+<td align="left">只读</td>
+<td align="left">表示读取文件时状态的数字</td>
+</tr>
+</tbody></table>
+<p><strong>备注:</strong> <code>readeyState</code>的取值如下:</p>
+<table>
+<thead>
+<tr>
+<th align="left">值</th>
+<th align="left">常量名</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">0</td>
+<td align="left">EMPTY</td>
+<td align="left">还没有加载任何数据</td>
+</tr>
+<tr>
+<td align="left">1</td>
+<td align="left">LOADING</td>
+<td align="left">数据正在被加载</td>
+</tr>
+<tr>
+<td align="left">2</td>
+<td align="left">DONE</td>
+<td align="left">已完成全部的读取请求.</td>
+</tr>
+</tbody></table>
+<p>使用示例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> reader = <span class="keyword">new</span> FileReader();</span><br><span class="line"><span class="built_in">console</span>.log(reader.error);       <span class="comment">// null</span></span><br><span class="line"><span class="built_in">console</span>.log(reader.result);      <span class="comment">// null</span></span><br><span class="line"><span class="built_in">console</span>.log(reader.readyState);  <span class="comment">// 0</span></span><br><span class="line"><span class="built_in">console</span>.log(reader.EMPTY);       <span class="comment">// 0</span></span><br><span class="line"><span class="built_in">console</span>.log(reader.LOADING);     <span class="comment">// 1</span></span><br><span class="line"><span class="built_in">console</span>.log(reader.DONE);        <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+
+<p><code>EMPTY</code>、<code>LOADING</code>、<code>DONE</code> 这三个属性同时存在于 <code>FileReader</code> 和它的的原型对象上，因此实例上有这三个属性，<code>FileReader</code> 对象本身也有这三个属性:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(FileReader.EMPTY);   <span class="comment">// 0</span></span><br><span class="line"><span class="built_in">console</span>.log(FileReader.LOADING); <span class="comment">// 1</span></span><br><span class="line"><span class="built_in">console</span>.log(FileReader.DONE);    <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="FileReader事件"><a href="#FileReader事件" class="headerlink" title="FileReader事件"></a>FileReader事件</h3><p>文件的读取是一个异步的过程，和 <code>XMLHttpRequest</code> 对象一样，在读取操作过程中会触发一系列事件。</p>
+<table>
+<thead>
+<tr>
+<th align="left">事件名称</th>
+<th align="left">描述</th>
+<th align="left">使用示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">abort</td>
+<td align="left">读取操作被中断时触发。</td>
+<td align="left"><code>reader.onabort = function(event) &#123;&#125;</code></td>
+</tr>
+<tr>
+<td align="left">error</td>
+<td align="left">在读取操作发生错误时触发。</td>
+<td align="left"><code>reader.onerror = function(event) &#123;&#125;</code></td>
+</tr>
+<tr>
+<td align="left">load</td>
+<td align="left">读取操作完成时触发。</td>
+<td align="left"><code>reader.addEventListener(&#39;load&#39;, function(event) &#123;&#125;)</code></td>
+</tr>
+<tr>
+<td align="left">loadstart</td>
+<td align="left">读取操作开始时触发。</td>
+<td align="left"><code>reader.onloadstart = function(event) &#123;&#125;</code></td>
+</tr>
+<tr>
+<td align="left">loadend</td>
+<td align="left">读取操作结束时（要么成功，要么失败）触发。</td>
+<td align="left"><code>reader.onloadend = function(event) &#123;&#125;</code></td>
+</tr>
+<tr>
+<td align="left">progress</td>
+<td align="left">在读取Blob时触发。</td>
+<td align="left"><code>reader.onprogress = function(event) &#123;&#125;</code></td>
+</tr>
+</tbody></table>
+<h3 id="FileReader实例方法"><a href="#FileReader实例方法" class="headerlink" title="FileReader实例方法"></a>FileReader实例方法</h3><p><code>FileReader</code> 的实例具有以下可操作的方法:</p>
+<table>
+<thead>
+<tr>
+<th align="left">方法名称</th>
+<th align="left">描述</th>
+<th align="left">使用示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">abort()</td>
+<td align="left">手动终止读取操作，只有当 <code>readyState</code> 为 1 时才能调用，调用后，<code>readyState</code> 值为 2</td>
+<td align="left"><code>reader.abort()</code></td>
+</tr>
+<tr>
+<td align="left">readAsArrayBuffer(blob)</td>
+<td align="left">读取指定的 <code>Blob</code> 或 <code>File</code> 对象。读取操作完成后(触发<code>loadend</code>事件)，<code>result</code>属性将包含一个 <code>ArrayBuffer</code> 对象表示所读取的文件的数据。</td>
+<td align="left"><code>reader.readAsArrayBuffer(blob)</code></td>
+</tr>
+<tr>
+<td align="left">readAsDataURL(blob)</td>
+<td align="left">读取指定的 <code>Blob</code> 或 <code>File</code> 对象。读取操作完成后(触发<code>loadend</code>事件)，<code>result</code>属性将包含一个 <code>data:URL</code> 格式的字符串(base64编码)</td>
+<td align="left"><code>reader.readAsArrayBuffer(file)</code></td>
+</tr>
+<tr>
+<td align="left">readAsBinaryString(blob)</td>
+<td align="left">已废弃，用 <code>readAsArrayBuffer</code> 代替</td>
+<td align="left">–</td>
+</tr>
+<tr>
+<td align="left">readAsText(blob[, encoding])</td>
+<td align="left">将 Blob 或者 File 对象转根据特殊的编码格式转化为内容(字符串形式), 默认编码是 <code>utf-8</code></td>
+<td align="left"><code>reader.readAsArrayBuffer(blob)</code></td>
+</tr>
+</tbody></table>
+<p>读取本地图片示例:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=<span class="string">&quot;file&quot;</span> id=<span class="string">&#x27;file&#x27;</span> accept=<span class="string">&quot;image/png, image/jpg, image/jpeg, image/gif&quot;</span> /&gt;&gt;<span class="xml"><span class="tag">&lt;<span class="name">br</span> /&gt;</span></span>&gt;</span><br><span class="line">&lt;img src=<span class="string">&quot;&quot;</span> alt=<span class="string">&quot;Image preview...&quot;</span>&gt;</span><br><span class="line"><span class="keyword">var</span> preview = <span class="built_in">document</span>.querySelector(<span class="string">&#x27;img&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> reader  = <span class="keyword">new</span> FileReader();</span><br><span class="line">reader.addEventListener(<span class="string">&quot;load&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  preview.src = reader.result;</span><br><span class="line">&#125;, <span class="literal">false</span>);</span><br><span class="line"><span class="built_in">document</span>.getElementById(<span class="string">&#x27;file&#x27;</span>).addEventListener(<span class="string">&#x27;change&#x27;</span>, <span class="function"><span class="keyword">function</span> (<span class="params">event</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> file = <span class="built_in">this</span>.files[<span class="number">0</span>];</span><br><span class="line">  <span class="keyword">if</span> (file) &#123;</span><br><span class="line">    reader.readAsDataURL(file);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://link.juejin.im/?target=https://codepen.io/mr-dang/pen/qKMrzV">读取多个文件示例 - CodePen</a></p>
+<p>dataURL是<code>base64</code>编码的数据格式，展示类型为字符串，形如: <code>data:image/jpeg;base64,/9j/4QXERXhpZgAATU...</code></p>
+<p>将 <code>dataURL</code> 转为 <code>blob</code>对象:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">dataURLToBlob</span> (<span class="params">dataurl</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> arr = dataurl.split(<span class="string">&#x27;,&#x27;</span>);</span><br><span class="line">  <span class="keyword">let</span> mime = arr[<span class="number">0</span>].match(<span class="regexp">/:(.*?);/</span>)[<span class="number">1</span>];</span><br><span class="line">  <span class="keyword">let</span> bstr = atob(arr[<span class="number">1</span>]);</span><br><span class="line">  <span class="keyword">let</span> n = bstr.length;</span><br><span class="line">  <span class="keyword">let</span> u8arr = <span class="keyword">new</span> <span class="built_in">Uint8Array</span>(n);</span><br><span class="line">  <span class="keyword">while</span> (n--) &#123;</span><br><span class="line">    u8arr[n] = bstr.charCodeAt(n);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> Blob([u8arr], &#123; <span class="attr">type</span>: mime &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结合上例，根据已有的 <code>&lt;img&gt;</code> 对象创建一个 <code>File</code> 对象:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">reader.addEventListener(<span class="string">&quot;load&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  preview.src = reader.result;</span><br><span class="line">  <span class="keyword">var</span> blob = dataURLToBlob(reader.result);</span><br><span class="line">  <span class="keyword">var</span> newFile = <span class="keyword">new</span> File([blob], <span class="string">&#x27;test.jpeg&#x27;</span>, &#123;<span class="attr">type</span>: blob.type&#125;);</span><br><span class="line">  <span class="built_in">console</span>.log(newFile.name); <span class="comment">// test.jpeg</span></span><br><span class="line">  <span class="built_in">console</span>.log(newFile.type);</span><br><span class="line">  <span class="built_in">console</span>.log(newFile.size);</span><br><span class="line">&#125;, <span class="literal">false</span>);</span><br></pre></td></tr></table></figure>
+
+<h2 id="URL-createObjectURL"><a href="#URL-createObjectURL" class="headerlink" title="URL.createObjectURL"></a>URL.createObjectURL</h2><p>将图片文件转换成 <code>data:URL</code> 格式供 <code>&lt;img&gt;</code> 元素展示，除了使用 <code>fileReader.readAsDataURL</code>外，还可以使用 <code>URL.createObjectURL</code>方法。 <code>URL.createObjectURL(blob)</code> 方法返回一个 <code>blob:</code> 开头的字符串，指向文件在内存中的地址。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=<span class="string">&quot;file&quot;</span> id=<span class="string">&#x27;file&#x27;</span> accept=<span class="string">&quot;image/png, image/jpg, image/jpeg, image/gif&quot;</span> /&gt;<span class="xml"><span class="tag">&lt;<span class="name">br</span> /&gt;</span></span></span><br><span class="line">&lt;img src=<span class="string">&quot;&quot;</span> alt=<span class="string">&quot;Image preview...&quot;</span>&gt;</span><br><span class="line"><span class="keyword">var</span> preview = <span class="built_in">document</span>.querySelector(<span class="string">&#x27;img&#x27;</span>);</span><br><span class="line"><span class="built_in">document</span>.getElementById(<span class="string">&#x27;file&#x27;</span>).addEventListener(<span class="string">&#x27;change&#x27;</span>, <span class="function"><span class="keyword">function</span> (<span class="params">event</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> file = <span class="built_in">this</span>.files[<span class="number">0</span>];</span><br><span class="line">  <span class="keyword">if</span> (file) &#123;</span><br><span class="line">    preview.src = URL.createObjectURL(file);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="综合实例"><a href="#综合实例" class="headerlink" title="综合实例"></a>综合实例</h2><p>综合以上，可以实现一个简单的粘贴图片并显示的功能。HTML5提供的内容编辑功能，可以粘贴部分图片，例如从网页上复制的图片。但是使用截图工具截取的图片无法粘贴显示，而且从网页上复制的图片会带有原来的样式，其图片url也是原来图片的指向。我们使用以下代码可以统一这两种粘贴操作，实现统一的效果。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=<span class="string">&quot;comment&quot;</span> contenteditable&gt;&lt;/div&gt;</span><br><span class="line">#comment&#123;</span><br><span class="line">  border: 1px solid #ccc;</span><br><span class="line">  min-height: <span class="number">500</span>px;</span><br><span class="line">  padding: <span class="number">10</span>px;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">#comment:focus &#123;</span><br><span class="line">  border-color: #ccc;</span><br><span class="line">  outline: none;</span><br><span class="line">&#125;</span><br><span class="line">.img-paste &#123;</span><br><span class="line">  max-width: <span class="number">100</span>%;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> comment = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;comment&#x27;</span>);</span><br><span class="line">comment.addEventListener(<span class="string">&#x27;paste&#x27;</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(event);</span><br><span class="line">  <span class="keyword">var</span> item = event.clipboardData.files[<span class="number">0</span>];</span><br><span class="line">  <span class="keyword">if</span> (item &amp;&amp; <span class="regexp">/image/</span>.test(item.type)) &#123;</span><br><span class="line">    <span class="keyword">var</span> img = <span class="keyword">new</span> Image();</span><br><span class="line">    img.src = URL.createObjectURL(item);</span><br><span class="line">    img.className = <span class="string">&#x27;img-paste&#x27;</span>;</span><br><span class="line">    <span class="built_in">this</span>.appendChild(img);</span><br><span class="line">    event.preventDefault();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;, <span class="literal">false</span>);</span><br></pre></td></tr></table></figure>
+
+<p>实例效果可以查看<a href="https://link.juejin.im/?target=https://codepen.io/mr-dang/full/rKQLWp/">这里</a>。</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><a href="https://link.juejin.im/?target=https://developer.mozilla.org/en-US/docs/Web/API/File/Using_files_from_web_applications">using files from web apps - MDN</a></li>
+<li><a href="https://link.juejin.im/?target=https://developer.mozilla.org/zh-CN/docs/Web/API/Blob">Blob - MDN</a></li>
+<li><a href="https://link.juejin.im/?target=https://www.iana.org/assignments/media-types/media-types.xhtml">MIME types - Wikipedia</a></li>
+<li><a href="https://link.juejin.im/?target=https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types">MIME TYPES - MDN</a></li>
+<li><a href="https://link.juejin.im/?target=https://developer.mozilla.org/zh-CN/docs/Web/API/FileReader">FileReader —— MDN</a></li>
+<li><a href="https://link.juejin.im/?target=http://www.w3school.com.cn/media/media_mimeref.asp">MIME types - w3school</a></li>
+<li>[Blob/DataURL/canvas/image的相互转换](</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="归海一刀 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="归海一刀 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/file/" rel="tag"># file</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/09/14/Docker%E5%AE%B9%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8/" rel="prev" title="Docker容器的使用">
+      <i class="fa fa-chevron-left"></i> Docker容器的使用
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/09/18/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7%E8%BD%AF%E4%BB%B6%E5%8F%8AIDE/" rel="next" title="开发工具软件及IDE">
+      开发工具软件及IDE <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#JavaScript-%E6%96%87%E4%BB%B6%E5%AF%B9%E8%B1%A1%E8%AF%A6%E8%A7%A3"><span class="nav-number">1.</span> <span class="nav-text">JavaScript 文件对象详解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Blob-%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.1.</span> <span class="nav-text">1. Blob 对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Blob%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0-Blob-array-options"><span class="nav-number">1.1.1.</span> <span class="nav-text">Blob构造函数 Blob(array[, options])</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Blob%E5%AE%9E%E4%BE%8B%E5%B1%9E%E6%80%A7"><span class="nav-number">1.1.2.</span> <span class="nav-text">Blob实例属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Blob%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95"><span class="nav-number">1.1.3.</span> <span class="nav-text">Blob实例方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-File-%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.2.</span> <span class="nav-text">2. File 对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#File%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="nav-number">1.2.1.</span> <span class="nav-text">File构造函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#File%E5%AE%9E%E4%BE%8B%E5%B1%9E%E6%80%A7"><span class="nav-number">1.2.2.</span> <span class="nav-text">File实例属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#File%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95"><span class="nav-number">1.2.3.</span> <span class="nav-text">File实例方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-FileReader-%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.3.</span> <span class="nav-text">3. FileReader 对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#FileReader%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="nav-number">1.3.1.</span> <span class="nav-text">FileReader构造函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FileReader%E5%AE%9E%E4%BE%8B%E5%B1%9E%E6%80%A7"><span class="nav-number">1.3.2.</span> <span class="nav-text">FileReader实例属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FileReader%E4%BA%8B%E4%BB%B6"><span class="nav-number">1.3.3.</span> <span class="nav-text">FileReader事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FileReader%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95"><span class="nav-number">1.3.4.</span> <span class="nav-text">FileReader实例方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#URL-createObjectURL"><span class="nav-number">1.4.</span> <span class="nav-text">URL.createObjectURL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%BC%E5%90%88%E5%AE%9E%E4%BE%8B"><span class="nav-number">1.5.</span> <span class="nav-text">综合实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-number">1.6.</span> <span class="nav-text">参考链接</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">归海一刀</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/DJPY" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;DJPY" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:dj.player.2020@gmail.com" title="E-Mail → mailto:dj.player.2020@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="http://www.djplayer.top/" title="http:&#x2F;&#x2F;www.djplayer.top" rel="noopener" target="_blank">曾经的网站(域名过期)</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">归海一刀</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+    <script defer src="/lib/three/canvas_lines.min.js"></script>
+    <script defer src="/lib/three/canvas_sphere.min.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
