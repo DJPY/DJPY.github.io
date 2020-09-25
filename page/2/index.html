@@ -157,6 +157,309 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/09/11/hexo-github-io%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="归海一刀">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="地字第一号">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/09/11/hexo-github-io%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" class="post-title-link" itemprop="url">hexo+github.io博客搭建📖</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-11 17:17:59" itemprop="dateCreated datePublished" datetime="2020-09-11T17:17:59+08:00">2020-09-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-14 16:11:28" itemprop="dateModified" datetime="2020-09-14T16:11:28+08:00">2020-09-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" itemprop="url" rel="index"><span itemprop="name">环境搭建</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="什么是-Hexo？"><a href="#什么是-Hexo？" class="headerlink" title="什么是 Hexo？"></a>什么是 Hexo？</h2><blockquote>
+<p>Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。</p>
+</blockquote>
+<h2 id="需要安装的软件环境"><a href="#需要安装的软件环境" class="headerlink" title="需要安装的软件环境"></a>需要安装的软件环境</h2><blockquote>
+<p>Node.js   [nodeJS官网] <a target="_blank" rel="noopener" href="https://nodejs.org/en/">https://nodejs.org/en/</a></p>
+</blockquote>
+<h2 id="安装-hexo："><a href="#安装-hexo：" class="headerlink" title="安装 hexo："></a>安装 hexo：</h2><blockquote>
+<p>npm install hero-cli -g</p>
+</blockquote>
+<h2 id="使用hexo创建博客目录并启动："><a href="#使用hexo创建博客目录并启动：" class="headerlink" title="使用hexo创建博客目录并启动："></a>使用hexo创建博客目录并启动：</h2><blockquote>
+<p>   hexo init myBlog<br>   cd myBlog<br>   yarn<br>   hexo s</p>
+</blockquote>
+<h2 id="更换hexo主题："><a href="#更换hexo主题：" class="headerlink" title="更换hexo主题："></a>更换hexo主题：</h2><h4 id="git形式："><a href="#git形式：" class="headerlink" title="git形式："></a>git形式：</h4><blockquote>
+<p>   cd 到博客主目录下<br>   git clone <a target="_blank" rel="noopener" href="https://github.com/theme-next/hexo-theme-next">https://github.com/theme-next/hexo-theme-next</a> themes/next<br>  修改根目录下的配置文件 [_config.yml] 中 theme: next<br>  然后启动<br>   hexo clean<br>   hero  s</p>
+</blockquote>
+<h2 id="部署截图"><a href="#部署截图" class="headerlink" title="部署截图"></a>部署截图</h2><blockquote>
+<p><img src="/2020/09/11/hexo-github-io%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/github2.jpg" alt="alt github"><br><img src="/2020/09/11/hexo-github-io%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/github3.jpg" alt="alt github"><br><img src="/2020/09/11/hexo-github-io%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/github1.jpg" alt="alt github"></p>
+</blockquote>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><h4 id="网站"><a href="#网站" class="headerlink" title="网站"></a>网站</h4><table>
+<thead>
+<tr>
+<th><strong>参数</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>title</td>
+<td>网站标题</td>
+</tr>
+<tr>
+<td>subtitle</td>
+<td>网站副标题</td>
+</tr>
+<tr>
+<td>description</td>
+<td>网站描述</td>
+</tr>
+<tr>
+<td>keywords</td>
+<td>网站的关键词。支援多个关键词。</td>
+</tr>
+<tr>
+<td>author</td>
+<td>您的名字</td>
+</tr>
+<tr>
+<td>language</td>
+<td>网站使用的语言。对于简体中文用户来说，使用不同的主题可能需要设置成不同的值，请参考你的主题的文档自行设置，常见的有 zh-Hans和 zh-CN。</td>
+</tr>
+<tr>
+<td>timezone</td>
+<td>网站时区。Hexo 默认使用您电脑的时区。请参考 <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones">时区列表</a> 进行设置，如 America/New_York, Japan, 和 UTC 。一般的，对于中国大陆地区可以使用 Asia/Shanghai。</td>
+</tr>
+</tbody></table>
+<h4 id="网址"><a href="#网址" class="headerlink" title="网址"></a>网址</h4><table>
+<thead>
+<tr>
+<th><strong>参数</strong></th>
+<th><strong>描述</strong></th>
+<th><strong>默认值</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>url</td>
+<td>网址</td>
+<td></td>
+</tr>
+<tr>
+<td>root</td>
+<td>网站根目录</td>
+<td></td>
+</tr>
+<tr>
+<td>permalink</td>
+<td>文章的 <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/permalinks">永久链接</a> 格式</td>
+<td>:year/:month/:day/:title/</td>
+</tr>
+<tr>
+<td>permalink_defaults</td>
+<td>永久链接中各部分的默认值</td>
+<td></td>
+</tr>
+<tr>
+<td>pretty_urls</td>
+<td>改写 <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/variables">permalink</a> 的值来美化 URL</td>
+<td></td>
+</tr>
+<tr>
+<td>pretty_urls.trailing_index</td>
+<td>是否在永久链接中保留尾部的 index.html，设置为 false 时去除</td>
+<td>true</td>
+</tr>
+<tr>
+<td>pretty_urls.trailing_html</td>
+<td>是否在永久链接中保留尾部的 .html, 设置为 false 时去除 (对尾部的 index.html无效)</td>
+<td></td>
+</tr>
+</tbody></table>
+<h4 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h4><table>
+<thead>
+<tr>
+<th><strong>参数</strong></th>
+<th><strong>描述</strong></th>
+<th><strong>默认值</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>source_dir</td>
+<td>资源文件夹，这个文件夹用来存放内容。</td>
+<td>source</td>
+</tr>
+<tr>
+<td>public_dir</td>
+<td>公共文件夹，这个文件夹用于存放生成的站点文件。</td>
+<td>public</td>
+</tr>
+<tr>
+<td>tag_dir</td>
+<td>标签文件夹</td>
+<td>tags</td>
+</tr>
+<tr>
+<td>archive_dir</td>
+<td>归档文件夹</td>
+<td>archives</td>
+</tr>
+<tr>
+<td>category_dir</td>
+<td>分类文件夹</td>
+<td>categories</td>
+</tr>
+<tr>
+<td>code_dir</td>
+<td>Include code 文件夹，source_dir 下的子目录</td>
+<td>downloads/code</td>
+</tr>
+<tr>
+<td>i18n_dir</td>
+<td>国际化（i18n）文件夹</td>
+<td>:lang</td>
+</tr>
+</tbody></table>
+<h4 id="文章"><a href="#文章" class="headerlink" title="文章"></a>文章</h4><table>
+<thead>
+<tr>
+<th><strong>参数</strong></th>
+<th><strong>描述</strong></th>
+<th><strong>默认值</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>new_post_name</td>
+<td>新文章的文件名称</td>
+<td>:title.md</td>
+</tr>
+<tr>
+<td>default_layout</td>
+<td>预设布局</td>
+<td>post</td>
+</tr>
+<tr>
+<td>auto_spacing</td>
+<td>在中文和英文之间加入空格</td>
+<td>false</td>
+</tr>
+<tr>
+<td>titlecase</td>
+<td>把标题转换为 title case</td>
+<td>false</td>
+</tr>
+<tr>
+<td>external_link</td>
+<td>在新标签中打开链接</td>
+<td>true</td>
+</tr>
+<tr>
+<td>external_link.enable</td>
+<td>在新标签中打开链接</td>
+<td>true</td>
+</tr>
+<tr>
+<td>external_link.field</td>
+<td>对整个网站（site）生效或仅对文章（post）生效</td>
+<td>site</td>
+</tr>
+<tr>
+<td>external_link.exclude</td>
+<td>需要排除的域名。主域名和子域名如 www 需分别配置</td>
+<td>[]</td>
+</tr>
+<tr>
+<td>filename_case</td>
+<td>把文件名称转换为 (1) 小写或 (2) 大写</td>
+<td>0</td>
+</tr>
+<tr>
+<td>render_drafts</td>
+<td>显示草稿</td>
+<td>false</td>
+</tr>
+<tr>
+<td>post_asset_folder</td>
+<td>启动 <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/asset-folders">Asset 文件夹</a></td>
+<td>false</td>
+</tr>
+<tr>
+<td>relative_link</td>
+<td>把链接改为与根目录的相对位址</td>
+<td>false</td>
+</tr>
+<tr>
+<td>future</td>
+<td>显示未来的文章</td>
+<td>true</td>
+</tr>
+<tr>
+<td>highlight</td>
+<td>代码块的设置, see <a target="_blank" rel="noopener" href="https://hexo.io/docs/syntax-highlight#Highlight-js">Highlight.js</a> section for usage guide</td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="发布文章"><a href="#发布文章" class="headerlink" title="发布文章"></a>发布文章</h2><h4 id="文章资源文件夹"><a href="#文章资源文件夹" class="headerlink" title="文章资源文件夹"></a>文章资源文件夹</h4><blockquote>
+<p>对于那些想要更有规律地提供图片和其他资源以及想要将他们的资源分布在各个文章上的人来说，Hexo也提供了更组织化的方式来管理资源。这个稍微有些复杂但是管理资源非常方便的功能可以通过将 config.yml 文件中的 post_asset_folder 选项设为 true 来打开。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">post_asset_folder: true</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>当资源文件管理功能打开后，Hexo将会在你每一次通过 <code> hexo new [layout] &lt;title&gt;</code> 命令创建新文章时自动创建一个文件夹。这个资源文件夹将会有与这个文章文件一样的名字。将所有与你的文章有关的资源放在这个关联文件夹中之后，你可以通过相对路径来引用它们，这样你就得到了一个更简单而且方便得多的工作流。</p>
+</blockquote>
+<h2 id="相关文档"><a href="#相关文档" class="headerlink" title="相关文档"></a>相关文档</h2><p>[hexo中文文档：] <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/">https://hexo.io/zh-cn/docs/</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2020/09/11/hello-world/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -292,7 +595,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-count">12</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -305,7 +608,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
