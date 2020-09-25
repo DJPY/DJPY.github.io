@@ -157,6 +157,147 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/09/24/%E4%B8%AD%E9%97%B4%E4%BB%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="归海一刀">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="地字第一号">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/09/24/%E4%B8%AD%E9%97%B4%E4%BB%B6/" class="post-title-link" itemprop="url">中间件</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-24 15:18:44" itemprop="dateCreated datePublished" datetime="2020-09-24T15:18:44+08:00">2020-09-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-25 09:40:52" itemprop="dateModified" datetime="2020-09-25T09:40:52+08:00">2020-09-25</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9E%B6%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">架构</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="中间件是什么"><a href="#中间件是什么" class="headerlink" title="中间件是什么"></a>中间件是什么</h2><p>中间件是一种独立的系统软件或服务程序，分布式应用软件借助这种软件在不同的技术之间共享资源。中间件位于客户机/ 服务器的操作系统之上，管理计算机资源和网络通讯。是连接两个独立应用程序或独立系统的软件。相连接的系统，即使它们具有不同的接口，但通过中间件相互之间仍能交换信息。</p>
+<p>执行中间件的一个关键途径是信息传递。通过中间件，应用程序可以工作于多平台或 OS 环境。</p>
+<p>中间件是介于操作系统和应用软件之间，为应用软件提供服务功能的软件，有消息中间件，交易中间件，应用服务器等。由于介于两种软件之间，所以，称为中间件。</p>
+<h2 id="为什么使用中间件"><a href="#为什么使用中间件" class="headerlink" title="为什么使用中间件"></a>为什么使用中间件</h2><p>具体地说，中间件屏蔽了底层操作系统的复杂性，使程序开发人员面对一个简单而统一的开发环境，减少程序设计的复杂性，将注意力集中在自己的业务上，不必再为程序在不同系统软件上的移植而重复工作，从而大大减少了技术上的负担。</p>
+<p>中间件带给应用系统的，不只是开发的简便、开发周期的缩短，也减少了系统的维护、运行和管理的工作量，还减少了计算机总体费用的投入。</p>
+<h2 id="主要中间件的分类"><a href="#主要中间件的分类" class="headerlink" title="主要中间件的分类"></a>主要中间件的分类</h2><h4 id="1-Hadoop"><a href="#1-Hadoop" class="headerlink" title="1. Hadoop"></a>1. Hadoop</h4><p>当一个大的任务由一台机器在规定的时间内不能完成时，人们就要采用分布式计算，即很多台机器联合起来共同完成任务。换句话说，就是把大任务拆分成许多个小任务，然后再把这些小任务分配给多台计算机去完成。参与计算的多台计算机组成一个分布式系统，需要运行一系列的分布式基础算法。</p>
+<p>Hadoop 就是一个分布式计算平台，用 <a target="_blank" rel="noopener" href="http://c.biancheng.net/java/">Java</a> 语言开发，包含 Common、MapReduce 和 HDFS 三个核心部件（HDFS 和 MapReduce 是最核心的两个部件）。其中：</p>
+<ul>
+<li>Common 为 Hadoop 的其他项目提供了一些常用工具，主要包括系统配置工具 Configuration、远程过程调用 RPC、序列化机制和 Hadoop 抽象文件系统等。</li>
+<li>MapReduce 是处理海量数据的计算模型。</li>
+<li>而 HDFS 用于存储海量数据，它具备高度容错性，能在低成本的通用硬件机器上稳定运行。</li>
+</ul>
+<p>Hadoop 实现了分布式计算中的基础算法（如一致算法、选举算法、故障检测、快照等），同时为用户提供了编程和命令接口。程序员调用这些函数能轻松写出分布式应用程序，我们都知道，如果一切从头开始，要完成一个分布式程序的编写是异常艰难的。</p>
+<p>Hadoop 在海量非结构化数据处理方面能充分展示它的优势，如消费者购买行为分析、商品推荐、关键词检索、信贷风险评估等。</p>
+<p>如图 1 所示，Hadoop 其实就是一个分布式计算平台，它“覆盖”在操作系统之上，向上提供函数调用（API）和命令接口，在水平方向完成分布式系统的基础算法。作为编程人员和用户，只要了解 API 和命令即可。</p>
+<p><img src="/2020/09/24/%E4%B8%AD%E9%97%B4%E4%BB%B6/middle1.jpg" alt="Hadoop"><br>图 1 Hadoop</p>
+<p>基于 Hadoop 平台衍生出来的开源项目主要有 Yarn、<a target="_blank" rel="noopener" href="http://c.biancheng.net/hbase/">HBase</a>、Hive、ZooKeeper、Avro、Sqoop、Mahout、Crossbow 等。</p>
+<p>以 Hadoop 为基础的生态目前已经成为<a target="_blank" rel="noopener" href="http://c.biancheng.net/big_data/">大数据</a>的标准方案，被广泛用于金融、市场、电信、交通等行业的海量数据分析，在即将到来的大数据时代，它将会发挥更大的作用。</p>
+<p>在中国，很多行业（如银行、电信、移动、电力、石油、交通等）沉淀了大量的业务数据，对这些海量数据进行挖掘和分析，将会带来巨大的价值。</p>
+<p>用 Hadoop 构建的应用实例对于计算资源的消耗具备两个明显的特征：</p>
+<ul>
+<li>资源需求大：表明 Hadoop 需要大量的存储、计算和网络带宽。</li>
+<li>资源需求具备季节性：表明除存储需求是经常性占用外，在运行 Mapreduce 时才需要大量的计算和网络资源，而分析大量数据的工作并不是经常性的——称为季节性</li>
+</ul>
+<p>因此，<a target="_blank" rel="noopener" href="http://c.biancheng.net/cloud_computing/">云计算</a>是大数据天生的计算资源供应途径，云计算的资源弹性很好地满足了大数据的季节性计算资源需求。也就是说，大数据是云计算经典的应用案例。当然，也可以按照大数据对计算资源的波峰需求静态配给计算资源，但是这种方案会造成资源的巨大浪费。</p>
+<h4 id="2-LVS"><a href="#2-LVS" class="headerlink" title="2. LVS"></a>2. LVS</h4><p>LVS 是 Linux Virtual Server 的首字母缩写，意为 Linux 虚拟服务器，即把许多台物理 Linux 计算机逻辑上整合成一台超级计算机，对用户来说感觉只有一台计算能力很强的服务器，如图 2 所示。</p>
+<p>LVS 就是一个由软件实现的负载均衡器，工作在网络 OSI 的第四层（应用层），是中国人章嵩开发的，代码已经并入了 Linux 内核。利用它，再加上一台廉价的计算机，就能构建一台企业级的负载均衡器。而那些外国大公司的负载均衡器，售价都要十几万元，甚至几十万元，便宜的也要几万元，LVS 出来后，这些产品都不得不降价。</p>
+<p>负载均衡器的作用就是把任务分配给最合适的服务器。比如一个大型购物网店，有 100 台同样配置的服务器在运行，如果某一时刻有 10 万用户在线购物，那么通过负载均衡器，每台服务器差不多承担 1000 个在线购物用户。</p>
+<p>LVS 的官网网站是 <a target="_blank" rel="noopener" href="http://www.linuxvirtualserver.org/">http：//www.linuxvirtualserver.org</a>。另外，两个较为流行的第七层负载均衡器是 Nginx 和 HAProxy，针对应用做均衡，所以能适应的负载种类没有 LVS 多。</p>
+<p><img src="/2020/09/24/%E4%B8%AD%E9%97%B4%E4%BB%B6/middle2.gif" alt="LVS原理图"><br>图 2 LVS原理图</p>
+<h4 id="3-Linux-HA"><a href="#3-Linux-HA" class="headerlink" title="3. Linux-HA"></a>3. Linux-HA</h4><p>也许有读者会问：“负载均衡器本身故障怎么办？”是的，如果负载均衡器出现故障，那么整个系统（如网店）将会瘫痪。所以人们开发了各种集群软件，如 Linux-HA 和 Keepalive 等，而微软干脆就在 Windows 服务器版中集成故障转移集群软件。</p>
+<p>集成故障转移集群软件的核心思想是，实时检测故障机器并及时让好的机器接管工作，对外提供高可用性。Linux-HA 意为 Linux 高可用性项目，此项目具体包含如下几个组件。</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Heartbeat</td>
+<td>负责维护集群中各节点的信息及它们之间的心跳通信。</td>
+</tr>
+<tr>
+<td>Pacemaker</td>
+<td>集群资源管理器，是核心组件，客户端通过 Pacemaker 来配置、管理并监控整个集群。此组件的社区网站为 <a target="_blank" rel="noopener" href="http://clusterlabs.org/">http：//clusterlabs.org/</a>。OpenStack 高可用性部署实例中一般都采用 Pacemaker 和 HAProxy。</td>
+</tr>
+<tr>
+<td>Resource Agent</td>
+<td>为用于控制服务启停、监控服务状态的脚本集合，本地资源管理器（LRM）调用这些脚本来启动、停止、监控各种集群资源。</td>
+</tr>
+<tr>
+<td>Cluster Glue</td>
+<td>包含一套函数库和工具，在集群栈中，除集群消息传输（由 Heartbeat 承担）、集群资源管理（由 Pacemaker 承担）和资源代理（由 Resource Agent 承担）功能外，其他功能都由 Cluster Glue 来完成。它包含的两个主要部分是 LRM 和 Stonith，前者是本地资源管理器，后者的任务是隔离故障机器。</td>
+</tr>
+</tbody></table>
+<p>通过心跳信号（Heartbeat）检测故障，一台好的计算机会不断向其他计算机发送心跳信号，也会接收其他计算机发送过来的心跳信息。当在规定的时间内没有收到对方计算机的心跳信号时，就启动应急预案，进一步确认故障并准备接管那台计算机的任务。</p>
+<p>例如，我们采用两台 LVS 计算机，并分别安装和配置 Linux-HA，一台 LVS 计算机作为工作机，另一台作为备份机，两台 LVS 计算机互相监督对方的运行状态。当工作机故障时，备份机接管负载均衡任务并报警。相反，当备份机出故障时，只报警，提醒技术员维修备份机。</p>
+<p>两台LVS计算机同时出故障是比较糟糕的情况，不过这种情况发生的概率很小，除非机房断电或者遭到雷击。对于一些非常关键的应用，可以增加参与负载均衡的服务器数量来提高可靠性，如民航飞机上采用 5 台服务器。</p>
+<h4 id="4-静态网站服务器"><a href="#4-静态网站服务器" class="headerlink" title="4. 静态网站服务器"></a>4. 静态网站服务器</h4><p>我们浏览一家公司的网站时，很可能就是跟那家公司服务器上的 Apache 程序打交道，网页浏览器与 Apache 成了标准的 C/S 模式，浏览器是客户端，而 Apache 是服务端。Apache 首先把主页对应的文件 index.html 发给我们，我们看到主页内容后，点击主页上的某个链接，它又把该链接对应的文件发给我们，过程如图 3 所示。</p>
+<p><img src="/2020/09/24/%E4%B8%AD%E9%97%B4%E4%BB%B6/middle3.jpg" alt="访问静态网页的过程"><br>图 3 访问静态网页的过程</p>
+<p>配合 <a target="_blank" rel="noopener" href="http://c.biancheng.net/php/">PHP</a> 引擎，Apache 也支持 PHP 动态网页。过程为：</p>
+<p>1）当 Apache 收到用户要浏览的 PHP 文件后，把这个 PHP 文件发给 PHP 执行引擎。</p>
+<p>2）PHP 执行引擎执行该 PHP 文件，产生一个临时的静态网页文件并发回给 Apache。</p>
+<p>3）最后 Apache 把这个临时的静态网页文件发给用户。</p>
+<p>采用 Perl、<a target="_blank" rel="noopener" href="http://c.biancheng.net/python/">Python</a> 和 Ruby 脚本语言编写的动态网页，其工作过程与 PHP 类似。</p>
+<p>Apache 是最流行的开源网站服务器，在世界排名前 100 万的网站中，有 60.6% 的网站采用 Apache；在排名前 1000 的大型网站中，Apache 占到了 34.5%，而 Ngnix 占到了 34.9%，略胜于 Apache。</p>
+<h4 id="5-动态应用服务器"><a href="#5-动态应用服务器" class="headerlink" title="5. 动态应用服务器"></a>5. 动态应用服务器</h4><p>开源的动态应用服务器有 JBoss、Tomcat、Geronimo、JOnAS，关于这些项目更详细的介绍，请参考相应的官方网站。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2020/09/24/%E5%BE%AE%E6%9C%8D%E5%8A%A1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -288,200 +429,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/09/24/DevOps/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="归海一刀">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="地字第一号">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/09/24/DevOps/" class="post-title-link" itemprop="url">DevOps</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2020-09-24 14:36:24 / 修改时间：14:42:12" itemprop="dateCreated datePublished" datetime="2020-09-24T14:36:24+08:00">2020-09-24</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%8F%E6%8D%B7%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">敏捷开发</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="DevOps"><a href="#DevOps" class="headerlink" title="DevOps"></a>DevOps</h1><p>DevOps（Development+Operations）强调共同对业务目标负责，以实现用户价值作为唯一的评判标准：保证产品功能及时实现、成功部署和稳定使用；</p>
-<ul>
-<li>是一种重视软件开发人员（Dev）和IT运维技术人员（Ops）之间沟通合作的文化、运动或惯例，改善团队之间的协作关系；</li>
-<li>是一组过程、方法与系统的统称，包含开发、测试和运维；</li>
-<li>用于促进开发（应用程序/软件工程）、技术运营和质量保障（QA）部门之间的沟通、协作与整合；</li>
-<li>透过自动化“软件交付”和“架构变更”的流程，使得构建、测试、发布软件能够更加地快捷、频繁和可靠，按时交付软件产品和服务；</li>
-</ul>
-<p><img src="/2020/09/24/DevOps/devops1.png" alt="img"></p>
-<p>从定义来看，其实devops就是为了让开发、运维和QA可以高效协作的流程。（可以把DevOps看作开发、技术运营和质量保障（QA）三者的交集。）</p>
-<p>总的说来：</p>
-<ul>
-<li>DevOps 是把人员、流程、产品进行结合，给用户提供持续价值的一个过程，既涉及到人员、流程、工具，也涉及到产品。</li>
-<li>DevOps 最终目的是给客户提供持续交付的价值，流程包括：产品的规划跟踪、软件开发、构建测试、产品部署、运维、监控和优化。</li>
-<li>通常把 DevOps 这些流程通过一个流水线的方式串联起来称为一个 DevOps 的流水线，其核心目标就是持续给用户交付有价值的产品。</li>
-</ul>
-<p>简而言之，DevOps不仅涉及技术背景，还包括非技术的文化方面。<br>在软件开发和应用周期中，提供了一个机制或模式来培育“协作”意识，帮助不同角色的成员紧密协作，充分利用现有资源，遵循交付的商业价值，共同对“输出”负责，对质量负责。</p>
-<h2 id="DevOps的好处与价值"><a href="#DevOps的好处与价值" class="headerlink" title="DevOps的好处与价值"></a>DevOps的好处与价值</h2><p>对于业务与产品而言，DevOps的好处更多基于持续部署与交付。<br>从组织结构而言，DevOps是部门间沟通协作的一组流程和方法，有助于改善公司组织文化、提高员工的参与感。</p>
-<ul>
-<li>代码的提交直接触发：消除等待时间，快速反馈</li>
-<li>每个变化对应一个交付管道：使问题定位和调试变得简单</li>
-<li>全开发流程高效自动化：稳定，快速，交付结果可预测</li>
-<li>持续进行自动化回归测试：提升交付质量</li>
-<li>设施共享并按需提供：资源利用最大化</li>
-</ul>
-<h2 id="可能的几个关注点"><a href="#可能的几个关注点" class="headerlink" title="可能的几个关注点"></a>可能的几个关注点</h2><p>DevOps绝不是推荐一定要在某一方面达到极致，而是从“整体”入手，充分激发“体系”的最佳效率。</p>
-<ul>
-<li>虽然真正实现DevOps的成本高昂，但任何时候都是实现DevOps的最佳时机，因为随着业务发展，成本一定是越来越高的；</li>
-<li>组织文化上的变革，鼓励不同的个体与部门共同协作，减少“内耗”；</li>
-<li>合适的DevOps人员（最起码保证在“向DevOps转换阶段”中，研发人员知晓运维，运维人员了解业务）；</li>
-<li>统一的标准、环境、工具、流程，例如：开发/测试环境尽可能地和生产环境保持一致；</li>
-<li>自动化和持续交付，简化重复性工作和减少不必要的等待</li>
-<li>涉及多个技术支撑：敏捷开发、持续集成&amp;部署、微服务、容器、云环境等；</li>
-<li>个体和团队的成效都放在整个产品开发&amp;运维生命周期内来进行评价；</li>
-</ul>
-<h2 id="DevOps能力环"><a href="#DevOps能力环" class="headerlink" title="DevOps能力环"></a>DevOps能力环</h2><p><img src="/2020/09/24/DevOps/devops2.png" alt="img"></p>
-<h2 id="DevOps与持续集成、持续交付"><a href="#DevOps与持续集成、持续交付" class="headerlink" title="DevOps与持续集成、持续交付"></a>DevOps与持续集成、持续交付</h2><p>DevOps的应用场景往往是一个庞大复杂的背景和流程的场景，大都包含一个持续交付流水线。</p>
-<ul>
-<li>开发人员：IDE、Git等开发和编译工具</li>
-<li>版本控制系统：分支策略、语义化版本</li>
-<li>构建服务器：持续集成、代码质量检查</li>
-<li>工件库：存放二进制包</li>
-<li>系统的包管理器：编译或测试环境系统上管理二进制包</li>
-<li>环境一致性</li>
-<li>预发布或生产：预发布环境与生产环境互换（蓝绿发布）</li>
-<li>发布管理：在高程度自动化测试的基础上实践自动化或半自动化（人工介入）部署</li>
-<li>问题管理系统</li>
-<li>。。。。。。<br>因此，DevOps 是一个完整的面向IT运维的工作流，以 IT 自动化以及持续集成（CI）、持续部署（CD）为基础，来优化程式开发、测试、系统运维等所有环节。<br>DevOps的技术要点由“持续集成/部署“”一线贯穿，主干开发是进行持续集成的前提，自动化以及代码周边集中管理是实施持续集成的必要条件。<br>换而言之，DevOps 是持续集成思想的延伸，持续集成/部署是 DevOps 的技术核心，在没有自动化测试、持续集成/部署之下，DevOps就是空中楼阁。</li>
-</ul>
-<h2 id="一个完整的过程"><a href="#一个完整的过程" class="headerlink" title="一个完整的过程"></a>一个完整的过程</h2><ol>
-<li>开发团队接到任务，需要完成一个变更</li>
-<li>为了更加顺利地开发，将这个变更分拆为几个小变更</li>
-<li>开发人员在本地开发并且测试，如果使用了测试驱动开发，在编写功能代码之前会先编写测试，然后编写能够让测试通过的实际代码</li>
-<li>开发人员将代码提交到企业内部的Git版本控制系统上</li>
-<li>构建服务器获取这个变更并初始化构建流程，单元测试之后，变更可以被发布到二进制库里</li>
-<li>配置管理系统根据“策略”，在测试环境中安装应用了新的变更</li>
-<li>新安装触发自动化回归测试，测试成功后，质量保证团队开始做人工测试</li>
-<li>人工测试通过后，质量保证团队将“已通过”标识给予这个变革</li>
-<li>变更在预发布环境中进行验收测试</li>
-<li>验收测试完成后，预发布环境被切换成生产环境，而生产环境变为新的预发布环境</li>
-</ol>
-<h2 id="典型的CICD流水线过程"><a href="#典型的CICD流水线过程" class="headerlink" title="典型的CICD流水线过程"></a>典型的CICD流水线过程</h2><ol>
-<li>项目开发编写代码，然后把代码推送到 GitLab 里存储，通过 GitLab 的 hook 使 Jenkins 执行一些 CI 的过程，比如做一些单元测试，构建 Docker image</li>
-<li>再把这个 Docker image 调用 helm 部署到开发环境或测试环境</li>
-<li>在测试环境里通过 Jenkins 触发一个集成测试的功能</li>
-<li>完成后就可以把它部署到生产环境</li>
-<li>通过 Kubernetes addon 的方式，把 Prometheus、Grafana 等监控组件部署到集群里，实现一整套从 CI 到 CD 的监控过程<br><img src="/2020/09/24/DevOps/devops3.png" alt="img"></li>
-</ol>
-<h2 id="DevOps黄金思维圈"><a href="#DevOps黄金思维圈" class="headerlink" title="DevOps黄金思维圈"></a>DevOps黄金思维圈</h2><p>时刻关注正在做什么，尝试识别问题范围，找出解决方案和改善途径。<br>Why—》How—》What</p>
-<h3 id="Why（目的、理念）"><a href="#Why（目的、理念）" class="headerlink" title="Why（目的、理念）"></a>Why（目的、理念）</h3><p>持续且快速、可靠的自动交付软件给用户：</p>
-<ol>
-<li>实现价值的持续交付，赢得市场竞争</li>
-<li>提升研发（增值活动）的时间，极大化增值活动产出</li>
-</ol>
-<h3 id="How（方法、措施）"><a href="#How（方法、措施）" class="headerlink" title="How（方法、措施）"></a>How（方法、措施）</h3><ul>
-<li>建设自动化、可重复、可靠的持续交付流水线（IT服务供应链）</li>
-<li>主要包括代码管理、持续集成、自动化测试、自动化部署、基础设施自动化管理等方面的工程能力</li>
-</ul>
-<h3 id="What（现象、成果）"><a href="#What（现象、成果）" class="headerlink" title="What（现象、成果）"></a>What（现象、成果）</h3><ol>
-<li>每次代码提交都需要经过流水线验证</li>
-<li>每次部署的版本都经过多环境验证</li>
-<li>部署频率可以得到提升</li>
-<li>周期时间（从代码提交到部署上线）的时间可以到分钟级</li>
-<li>部署失败率低</li>
-<li>部署失败的修复时间短，影响小</li>
-</ol>
-<h1 id="一些图示"><a href="#一些图示" class="headerlink" title="一些图示"></a>一些图示</h1><h2 id="关系与演进"><a href="#关系与演进" class="headerlink" title="关系与演进"></a>关系与演进</h2><p><img src="/2020/09/24/DevOps/devops4.png" alt="img"></p>
-<h2 id="涉及的工具"><a href="#涉及的工具" class="headerlink" title="涉及的工具"></a>涉及的工具</h2><p>DevOps的目标不是单靠一款工具就能实现的。<br>在各个阶段，每个都有其单独对应的目标。<br>依赖于组织的选择，有着各种各样的工具可以在相应的背景和趋势下，实现当前业务目标，满足中远期的需求。<br><img src="/2020/09/24/DevOps/devops5.jpg" alt="img"></p>
-<p><img src="/2020/09/24/DevOps/devops6.png" alt="img"></p>
-<p><strong>DevOps对应用程序发布的影响</strong></p>
-<p>在很多企业中，应用程序发布是一项涉及多个团队、压力很大、风险很高的活动。然而在具备DevOps能力的组织中，应用程序发布的风险很低，原因如下 [2] ：</p>
-<p><strong>（1）减少变更范围</strong></p>
-<p>与传统的瀑布模式模型相比，采用敏捷或迭代式开发意味着更频繁的发布、每次发布包含的变化更少。由于部署经常进行，因此每次部署不会对生产系统造成巨大影响，应用程序会以平滑的速率逐渐生长。</p>
-<p><strong>（2）加强发布协调</strong></p>
-<p>靠强有力的发布协调人来弥合开发与运营之间的技能鸿沟和沟通鸿沟；采用电子数据表、电话会议和企业门户（wiki、sharepoint）等协作工具来确保所有相关人员理解变更的内容并全力合作。</p>
-<p><strong>（3）自动化</strong></p>
-<p>强大的部署自动化手段确保部署任务的可重复性、减少部署出错的可能性。</p>
-<p>与传统开发方法那种大规模的、不频繁的发布（通常以“季度”或“年”为单位）相比，敏捷方法大大提升了发布频率（通常以“天”或“周”为单位）。</p>
-<p><strong>实现DevOps需要什么？</strong></p>
-<p><strong>硬性要求：工具上的准备</strong></p>
-<p>上文提到了工具链的打通，那么工具自然就需要做好准备。现将工具类型及对应的不完全列举整理如下：</p>
-<p>代码管理（SCM）：<strong>GitHub</strong>、GitLab、BitBucket、SubVersion</p>
-<p>构建工具：<strong>Ant</strong>、Gradle、<strong>maven</strong></p>
-<p>自动部署：Capistrano、CodeDeploy</p>
-<p>持续集成（CI）：Bamboo、Hudson、Jenkins</p>
-<p>配置管理：Ansible、Chef、Puppet、SaltStack、ScriptRock GuardRail</p>
-<p>容器：<strong>Docker</strong>、LXC、第三方厂商如AWS</p>
-<p>编排：Kubernetes、Core、Apache Mesos、DC/OS</p>
-<p>服务注册与发现：<strong>Zookeeper</strong>、etcd、Consul</p>
-<p>脚本语言：python、ruby、shell</p>
-<p>日志管理：ELK、Logentries</p>
-<p>系统监控：Datadog、Graphite、Icinga、Nagios</p>
-<p>性能监控：AppDynamics、New Relic、Splunk</p>
-<p>压力测试：JMeter、Blaze Meter、loader.io</p>
-<p>预警：PagerDuty、pingdom、厂商自带如AWS SNS</p>
-<p>HTTP加速器：Varnish</p>
-<p>消息总线：ActiveMQ、SQS</p>
-<p>应用服务器：Tomcat、JBoss</p>
-<p>Web服务器：Apache、Nginx、IIS</p>
-<p>数据库：MySQL、Oracle、PostgreSQL等关系型数据库；cassandra、mongoDB、redis等NoSQL数据库</p>
-<p>项目管理（PM）：Jira、Asana、Taiga、Trello、Basecamp、Pivotal Tracker</p>
-<p>在工具的选择上，需要结合公司业务需求和技术团队情况而定。（注：更多关于工具的详细介绍可以参见此文：51 Best DevOps Tools for #DevOps Engineers）</p>
-<p><strong>软性需求：文化和人</strong></p>
-<p>DevOps成功与否，公司组织是否利于协作是关键。开发人员和运维人员可以良好沟通互相学习，从而拥有高生产力。并且协作也存在于业务人员与开发人员之间。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -547,20 +498,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
