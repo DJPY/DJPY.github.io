@@ -17,7 +17,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":2},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
   <meta property="og:type" content="website">
@@ -157,7 +157,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/09/11/hexo-github-io%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/09/24/%E5%BE%AE%E6%9C%8D%E5%8A%A1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -171,7 +171,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/09/11/hexo-github-io%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/" class="post-title-link" itemprop="url">hexo+github.io博客搭建📖</a>
+            <a href="/2020/09/24/%E5%BE%AE%E6%9C%8D%E5%8A%A1/" class="post-title-link" itemprop="url">微服务</a>
         </h2>
 
         <div class="post-meta">
@@ -180,24 +180,9 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2020-09-11 17:17:59" itemprop="dateCreated datePublished" datetime="2020-09-11T17:17:59+08:00">2020-09-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-09-14 16:11:28" itemprop="dateModified" datetime="2020-09-14T16:11:28+08:00">2020-09-14</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" itemprop="url" rel="index"><span itemprop="name">环境搭建</span></a>
-                </span>
+              <time title="创建时间：2020-09-24 15:09:46 / 修改时间：15:16:15" itemprop="dateCreated datePublished" datetime="2020-09-24T15:09:46+08:00">2020-09-24</time>
             </span>
 
           
@@ -211,236 +196,68 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="什么是-Hexo？"><a href="#什么是-Hexo？" class="headerlink" title="什么是 Hexo？"></a>什么是 Hexo？</h2><blockquote>
-<p>Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。</p>
-</blockquote>
-<h2 id="需要安装的软件环境"><a href="#需要安装的软件环境" class="headerlink" title="需要安装的软件环境"></a>需要安装的软件环境</h2><blockquote>
-<p>Node.js   [nodeJS官网] <a target="_blank" rel="noopener" href="https://nodejs.org/en/">https://nodejs.org/en/</a></p>
-</blockquote>
-<h2 id="安装-hexo："><a href="#安装-hexo：" class="headerlink" title="安装 hexo："></a>安装 hexo：</h2><blockquote>
-<p>npm install hero-cli -g</p>
-</blockquote>
-<h2 id="使用hexo创建博客目录并启动："><a href="#使用hexo创建博客目录并启动：" class="headerlink" title="使用hexo创建博客目录并启动："></a>使用hexo创建博客目录并启动：</h2><blockquote>
-<p>   hexo init myBlog<br>   cd myBlog<br>   yarn<br>   hexo s</p>
-</blockquote>
-<h2 id="更换hexo主题："><a href="#更换hexo主题：" class="headerlink" title="更换hexo主题："></a>更换hexo主题：</h2><h4 id="git形式："><a href="#git形式：" class="headerlink" title="git形式："></a>git形式：</h4><blockquote>
-<p>   cd 到博客主目录下<br>   git clone <a target="_blank" rel="noopener" href="https://github.com/theme-next/hexo-theme-next">https://github.com/theme-next/hexo-theme-next</a> themes/next<br>  修改根目录下的配置文件 [_config.yml] 中 theme: next<br>  然后启动<br>   hexo clean<br>   hero  s</p>
-</blockquote>
-<h2 id="部署截图"><a href="#部署截图" class="headerlink" title="部署截图"></a>部署截图</h2><blockquote>
-<p><img src="/2020/09/11/hexo-github-io%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/github2.jpg" alt="alt github"><br><img src="/2020/09/11/hexo-github-io%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/github3.jpg" alt="alt github"><br><img src="/2020/09/11/hexo-github-io%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/github1.jpg" alt="alt github"></p>
-</blockquote>
-<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><h4 id="网站"><a href="#网站" class="headerlink" title="网站"></a>网站</h4><table>
-<thead>
-<tr>
-<th><strong>参数</strong></th>
-<th><strong>描述</strong></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>title</td>
-<td>网站标题</td>
-</tr>
-<tr>
-<td>subtitle</td>
-<td>网站副标题</td>
-</tr>
-<tr>
-<td>description</td>
-<td>网站描述</td>
-</tr>
-<tr>
-<td>keywords</td>
-<td>网站的关键词。支援多个关键词。</td>
-</tr>
-<tr>
-<td>author</td>
-<td>您的名字</td>
-</tr>
-<tr>
-<td>language</td>
-<td>网站使用的语言。对于简体中文用户来说，使用不同的主题可能需要设置成不同的值，请参考你的主题的文档自行设置，常见的有 zh-Hans和 zh-CN。</td>
-</tr>
-<tr>
-<td>timezone</td>
-<td>网站时区。Hexo 默认使用您电脑的时区。请参考 <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones">时区列表</a> 进行设置，如 America/New_York, Japan, 和 UTC 。一般的，对于中国大陆地区可以使用 Asia/Shanghai。</td>
-</tr>
-</tbody></table>
-<h4 id="网址"><a href="#网址" class="headerlink" title="网址"></a>网址</h4><table>
-<thead>
-<tr>
-<th><strong>参数</strong></th>
-<th><strong>描述</strong></th>
-<th><strong>默认值</strong></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>url</td>
-<td>网址</td>
-<td></td>
-</tr>
-<tr>
-<td>root</td>
-<td>网站根目录</td>
-<td></td>
-</tr>
-<tr>
-<td>permalink</td>
-<td>文章的 <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/permalinks">永久链接</a> 格式</td>
-<td>:year/:month/:day/:title/</td>
-</tr>
-<tr>
-<td>permalink_defaults</td>
-<td>永久链接中各部分的默认值</td>
-<td></td>
-</tr>
-<tr>
-<td>pretty_urls</td>
-<td>改写 <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/variables">permalink</a> 的值来美化 URL</td>
-<td></td>
-</tr>
-<tr>
-<td>pretty_urls.trailing_index</td>
-<td>是否在永久链接中保留尾部的 index.html，设置为 false 时去除</td>
-<td>true</td>
-</tr>
-<tr>
-<td>pretty_urls.trailing_html</td>
-<td>是否在永久链接中保留尾部的 .html, 设置为 false 时去除 (对尾部的 index.html无效)</td>
-<td></td>
-</tr>
-</tbody></table>
-<h4 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h4><table>
-<thead>
-<tr>
-<th><strong>参数</strong></th>
-<th><strong>描述</strong></th>
-<th><strong>默认值</strong></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>source_dir</td>
-<td>资源文件夹，这个文件夹用来存放内容。</td>
-<td>source</td>
-</tr>
-<tr>
-<td>public_dir</td>
-<td>公共文件夹，这个文件夹用于存放生成的站点文件。</td>
-<td>public</td>
-</tr>
-<tr>
-<td>tag_dir</td>
-<td>标签文件夹</td>
-<td>tags</td>
-</tr>
-<tr>
-<td>archive_dir</td>
-<td>归档文件夹</td>
-<td>archives</td>
-</tr>
-<tr>
-<td>category_dir</td>
-<td>分类文件夹</td>
-<td>categories</td>
-</tr>
-<tr>
-<td>code_dir</td>
-<td>Include code 文件夹，source_dir 下的子目录</td>
-<td>downloads/code</td>
-</tr>
-<tr>
-<td>i18n_dir</td>
-<td>国际化（i18n）文件夹</td>
-<td>:lang</td>
-</tr>
-</tbody></table>
-<h4 id="文章"><a href="#文章" class="headerlink" title="文章"></a>文章</h4><table>
-<thead>
-<tr>
-<th><strong>参数</strong></th>
-<th><strong>描述</strong></th>
-<th><strong>默认值</strong></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>new_post_name</td>
-<td>新文章的文件名称</td>
-<td>:title.md</td>
-</tr>
-<tr>
-<td>default_layout</td>
-<td>预设布局</td>
-<td>post</td>
-</tr>
-<tr>
-<td>auto_spacing</td>
-<td>在中文和英文之间加入空格</td>
-<td>false</td>
-</tr>
-<tr>
-<td>titlecase</td>
-<td>把标题转换为 title case</td>
-<td>false</td>
-</tr>
-<tr>
-<td>external_link</td>
-<td>在新标签中打开链接</td>
-<td>true</td>
-</tr>
-<tr>
-<td>external_link.enable</td>
-<td>在新标签中打开链接</td>
-<td>true</td>
-</tr>
-<tr>
-<td>external_link.field</td>
-<td>对整个网站（site）生效或仅对文章（post）生效</td>
-<td>site</td>
-</tr>
-<tr>
-<td>external_link.exclude</td>
-<td>需要排除的域名。主域名和子域名如 www 需分别配置</td>
-<td>[]</td>
-</tr>
-<tr>
-<td>filename_case</td>
-<td>把文件名称转换为 (1) 小写或 (2) 大写</td>
-<td>0</td>
-</tr>
-<tr>
-<td>render_drafts</td>
-<td>显示草稿</td>
-<td>false</td>
-</tr>
-<tr>
-<td>post_asset_folder</td>
-<td>启动 <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/asset-folders">Asset 文件夹</a></td>
-<td>false</td>
-</tr>
-<tr>
-<td>relative_link</td>
-<td>把链接改为与根目录的相对位址</td>
-<td>false</td>
-</tr>
-<tr>
-<td>future</td>
-<td>显示未来的文章</td>
-<td>true</td>
-</tr>
-<tr>
-<td>highlight</td>
-<td>代码块的设置, see <a target="_blank" rel="noopener" href="https://hexo.io/docs/syntax-highlight#Highlight-js">Highlight.js</a> section for usage guide</td>
-<td></td>
-</tr>
-</tbody></table>
-<h2 id="发布文章"><a href="#发布文章" class="headerlink" title="发布文章"></a>发布文章</h2><h4 id="文章资源文件夹"><a href="#文章资源文件夹" class="headerlink" title="文章资源文件夹"></a>文章资源文件夹</h4><blockquote>
-<p>对于那些想要更有规律地提供图片和其他资源以及想要将他们的资源分布在各个文章上的人来说，Hexo也提供了更组织化的方式来管理资源。这个稍微有些复杂但是管理资源非常方便的功能可以通过将 config.yml 文件中的 post_asset_folder 选项设为 true 来打开。</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">post_asset_folder: true</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>当资源文件管理功能打开后，Hexo将会在你每一次通过 <code> hexo new [layout] &lt;title&gt;</code> 命令创建新文章时自动创建一个文件夹。这个资源文件夹将会有与这个文章文件一样的名字。将所有与你的文章有关的资源放在这个关联文件夹中之后，你可以通过相对路径来引用它们，这样你就得到了一个更简单而且方便得多的工作流。</p>
-</blockquote>
-<h2 id="相关文档"><a href="#相关文档" class="headerlink" title="相关文档"></a>相关文档</h2><p>[hexo中文文档：] <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/">https://hexo.io/zh-cn/docs/</a></p>
+          <h1 id="什么是微服务？为什么要用微服务？"><a href="#什么是微服务？为什么要用微服务？" class="headerlink" title="什么是微服务？为什么要用微服务？"></a>什么是微服务？为什么要用微服务？</h1><p><img src="/2020/09/24/%E5%BE%AE%E6%9C%8D%E5%8A%A1/microSer1.png" alt="img"></p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近几年微服务很火，大家都在建设微服务，仿佛不谈点微服务相关的技术，都显得不是那么主流了。</p>
+<p>近几年见识到身边朋友的很多公司和团队都在尝试进行微服务的改变，但很多团队并没有实际微服务踩坑经验，很多团队甚至强行为了微服务而去微服务，最终写成一个大型的分布式单体应用，就是改造后的系统既没有微服务的快速扩容，灵活发布的特性，也让原本的单体应用失去了方便开发，部署容易的特性（项目拆为多份，开发部署复杂度都提高了），不得不说是得不偿失。</p>
+<p>作者亲身经历和参与几个大型项目微服务的改造和建设。所以想作为实践者跟大家分享关于微服务的实际经验，帮助大家了解微服务的优缺点，从而可以结合自身业务做出更加合适的选择，作为本篇文章的三个主题，例如：</p>
+<ol>
+<li>什么是微服务？为什么要用微服务？</li>
+<li>微服务解决什么问题，又引入了什么问题？</li>
+<li>使用微服务应该要遵循哪些原则？什么样的情况你不应该使用微服务？</li>
+</ol>
+<p>（PS：因为市面上太多对如果使用微服务框架工具的教程，所以本篇只是一篇关于微服务的总体概述性文章，不涉及各种微服务框架的安装和使用教程，我们只谈论微服务本身的设计模式的优缺点和适合应用的场景）</p>
+<h3 id="一：什么是微服务？为什么要用微服务？"><a href="#一：什么是微服务？为什么要用微服务？" class="headerlink" title="一：什么是微服务？为什么要用微服务？"></a>一：什么是微服务？为什么要用微服务？</h3><p>什么是微服务？（熟悉的同学可以直接跳过）</p>
+<p>简单举例：看军事新闻的同学应该都知道，一艘航空母舰作战能力虽然很强，但是弱点太明显，就是防御能力太差，单艘的航空母舰很少单独行动，通常航空母舰战斗群才是主要军事力量，你可以把单艘航母理解为的单体应用（防御差，机动性不好），把航母战斗群（调度复杂，维护费用高）理解为微服务。</p>
+<p>大部分的开发者经历和开发过单体应用，无论是传统的 Servlet + JSP，还是 SSM，还是现在的 SpringBoot，它们都是单体应用，那么长期陪伴我们的单体应用有什么弊端？我们是面临了什么问题，导致我们要抛弃单体应用转向微服务架构？个人总结主要问题如下：</p>
+<ul>
+<li>部署成本高（无论是修改1行代码，还是10行代码，都要全量替换）</li>
+<li>改动影响大，风险高（不论代码改动多小，成本都相同）</li>
+<li>因为成本高，风险高，所以导致部署频率低（无法快速交付客户需求）</li>
+</ul>
+<p>当然还有例如无法满足快速扩容，弹性伸缩，无法适应云环境特性等问题，但我们不一一详谈了，以上的问题，都是微服务架构要解决的问题。</p>
+<p><img src="/2020/09/24/%E5%BE%AE%E6%9C%8D%E5%8A%A1/microSer2.png" alt="img"></p>
+<h3 id="二：微服务解决什么问题，又引入了什么问题？"><a href="#二：微服务解决什么问题，又引入了什么问题？" class="headerlink" title="二：微服务解决什么问题，又引入了什么问题？"></a>二：微服务解决什么问题，又引入了什么问题？</h3><p>我们先看看微服务能带给我们什么？微服务架构的特点：</p>
+<ul>
+<li>针对特定服务发布，影响小，风险小，成本低</li>
+<li>频繁发布版本，快速交付需求</li>
+<li>低成本扩容，弹性伸缩，适应云环境</li>
+</ul>
+<p>我们知道一个朴素的理念，没有任何事物是完美的，任何东西都有两面性，有得必有失，那么在选择微服务在解决了快速响应和弹性伸缩的问题同时，它又给我们带来了什么问题？个人总结如下：</p>
+<ul>
+<li>分布式系统的复杂性</li>
+<li>部署，测试和监控的成本问题</li>
+<li>分布式事务和CAP的相关问题</li>
+</ul>
+<p>系统应用由原来的单体变成几十到几百个不同的工程，会所产生例如包括服务间的依赖，服务如何拆封，内部接口规范，数据传递等等问题，尤其是服务拆分，需要团队熟悉业务流程，懂得取舍，要保证拆分的粒度服务既符合“高内聚，低耦合”的基本原则，还要兼顾业务的发展以及公司的愿景，要还要说服团队成员为之努力，并且积极投入，在多方中间取得平衡。</p>
+<p>对于分布式系统，部署，测试和监控都需要大量的中间件来支撑，而且中间件本身也要维护，原先单体应用很简单的事务问题 ，转到分布式环境就变得很复杂，分布式事务是采用简单的重试+补偿机制，还是采用二阶段提交协议等强一致性方法来解决，就要取决对业务场景的熟悉加上反复的权衡了，相同问题还包括对 CAP 模型的权衡，总之微服务对团队整体的技术栈水平整体要求更高。</p>
+<p><img src="/2020/09/24/%E5%BE%AE%E6%9C%8D%E5%8A%A1/microSer3.png" alt="img"></p>
+<h3 id="三：使用微服务应该遵循哪些原则？"><a href="#三：使用微服务应该遵循哪些原则？" class="headerlink" title="三：使用微服务应该遵循哪些原则？"></a>三：使用微服务应该遵循哪些原则？</h3><p>古人云：兵马未动，粮草先行。建设微服务是需要建立长远规划，不是像写CMS那样建好数据库表，然后就开始干活，这样十有八九是会失败的。我们要进行微服务改造前，架构师要提前做好规划，我们把这里分为三步，前期阶段，设计阶段，技术阶段</p>
+<p>前期阶段，大致要做好如下事情：</p>
+<ul>
+<li>和多方充分沟通，确保能符合客户和组织的需求，并且得到认同</li>
+<li>和团队沟通，让队友（开发/测试/运维）理解，并且积极投入</li>
+<li>和业务部门沟通，指定版本计划和上线时间</li>
+</ul>
+<p>设计阶段，参考 Sam Newman 的著作<a target="_blank" rel="noopener" href="https://book.douban.com/subject/26772677/">《微服务设计》</a>，单微服务必须要满足以下的条件，才符合微服务的基本要求：</p>
+<ul>
+<li>标准的 REST 风格接口（基于 HTTP 和 JSON 格式）</li>
+<li>独立部署，避免共享数据库（避免因为数据库而影响整个分布式系统）</li>
+<li>业务上的高内聚，减少依赖（从设计上要避免服务过大或者太小）</li>
+</ul>
+<p>庞大的分布式系统，需要强大基础设施来支撑，微服务涉及哪些基础设施？</p>
+<ul>
+<li>CI/CD和自动化（分布式系统几乎不可能通过人工手动发布）</li>
+<li>虚拟化技术（要保证微服务运行环境隔离，目前行业主流的是使用 Docker 容器）</li>
+<li>日志聚合，全链路监控（高度可观察和分析诊断问题）</li>
+</ul>
+<p>说了那么多，那什么样的情况下，你的团队不适合建设微服务？（请勿对号入座）</p>
+<ol>
+<li>开发团队不具备自主性，所在组织对开发团队限制非常多（具体请参考 <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%BA%B7%E5%A8%81%E5%AE%9A%E5%BE%8B">康威定律</a>）</li>
+<li>团队不熟悉业务，无法识别出服务的边界，进行合理的拆分（请参考 DDD <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Domain-driven_design">领域驱动设计</a>）</li>
+</ol>
+<p><img src="/2020/09/24/%E5%BE%AE%E6%9C%8D%E5%8A%A1/microSer4.png" alt="img"></p>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>微服务设计其实是很早就有的设计思想，因为随着虚拟化技术的崛起，微服务可以低成本的实现，所以也开始流行和兴起。</p>
+<p>微服务的内涵很深，其中就包括，自动化，去中心化，独立性等等，其中细节无法用一篇文章概述清楚，我们在做技术选型或者方案的时候，尽可能多去了解技术的本身和起源再结合我们业务的特点，进行更好的选择。</p>
 
       
     </div>
@@ -460,7 +277,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/09/11/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/09/24/DevOps/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -474,7 +291,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/09/11/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
+            <a href="/2020/09/24/DevOps/" class="post-title-link" itemprop="url">DevOps</a>
         </h2>
 
         <div class="post-meta">
@@ -483,8 +300,18 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2020-09-11 11:40:32" itemprop="dateCreated datePublished" datetime="2020-09-11T11:40:32+08:00">2020-09-11</time>
+              <time title="创建时间：2020-09-24 14:36:24 / 修改时间：14:42:12" itemprop="dateCreated datePublished" datetime="2020-09-24T14:36:24+08:00">2020-09-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%8F%E6%8D%B7%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">敏捷开发</span></a>
+                </span>
             </span>
 
           
@@ -498,19 +325,129 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+          <h1 id="DevOps"><a href="#DevOps" class="headerlink" title="DevOps"></a>DevOps</h1><p>DevOps（Development+Operations）强调共同对业务目标负责，以实现用户价值作为唯一的评判标准：保证产品功能及时实现、成功部署和稳定使用；</p>
+<ul>
+<li>是一种重视软件开发人员（Dev）和IT运维技术人员（Ops）之间沟通合作的文化、运动或惯例，改善团队之间的协作关系；</li>
+<li>是一组过程、方法与系统的统称，包含开发、测试和运维；</li>
+<li>用于促进开发（应用程序/软件工程）、技术运营和质量保障（QA）部门之间的沟通、协作与整合；</li>
+<li>透过自动化“软件交付”和“架构变更”的流程，使得构建、测试、发布软件能够更加地快捷、频繁和可靠，按时交付软件产品和服务；</li>
+</ul>
+<p><img src="/2020/09/24/DevOps/devops1.png" alt="img"></p>
+<p>从定义来看，其实devops就是为了让开发、运维和QA可以高效协作的流程。（可以把DevOps看作开发、技术运营和质量保障（QA）三者的交集。）</p>
+<p>总的说来：</p>
+<ul>
+<li>DevOps 是把人员、流程、产品进行结合，给用户提供持续价值的一个过程，既涉及到人员、流程、工具，也涉及到产品。</li>
+<li>DevOps 最终目的是给客户提供持续交付的价值，流程包括：产品的规划跟踪、软件开发、构建测试、产品部署、运维、监控和优化。</li>
+<li>通常把 DevOps 这些流程通过一个流水线的方式串联起来称为一个 DevOps 的流水线，其核心目标就是持续给用户交付有价值的产品。</li>
+</ul>
+<p>简而言之，DevOps不仅涉及技术背景，还包括非技术的文化方面。<br>在软件开发和应用周期中，提供了一个机制或模式来培育“协作”意识，帮助不同角色的成员紧密协作，充分利用现有资源，遵循交付的商业价值，共同对“输出”负责，对质量负责。</p>
+<h2 id="DevOps的好处与价值"><a href="#DevOps的好处与价值" class="headerlink" title="DevOps的好处与价值"></a>DevOps的好处与价值</h2><p>对于业务与产品而言，DevOps的好处更多基于持续部署与交付。<br>从组织结构而言，DevOps是部门间沟通协作的一组流程和方法，有助于改善公司组织文化、提高员工的参与感。</p>
+<ul>
+<li>代码的提交直接触发：消除等待时间，快速反馈</li>
+<li>每个变化对应一个交付管道：使问题定位和调试变得简单</li>
+<li>全开发流程高效自动化：稳定，快速，交付结果可预测</li>
+<li>持续进行自动化回归测试：提升交付质量</li>
+<li>设施共享并按需提供：资源利用最大化</li>
+</ul>
+<h2 id="可能的几个关注点"><a href="#可能的几个关注点" class="headerlink" title="可能的几个关注点"></a>可能的几个关注点</h2><p>DevOps绝不是推荐一定要在某一方面达到极致，而是从“整体”入手，充分激发“体系”的最佳效率。</p>
+<ul>
+<li>虽然真正实现DevOps的成本高昂，但任何时候都是实现DevOps的最佳时机，因为随着业务发展，成本一定是越来越高的；</li>
+<li>组织文化上的变革，鼓励不同的个体与部门共同协作，减少“内耗”；</li>
+<li>合适的DevOps人员（最起码保证在“向DevOps转换阶段”中，研发人员知晓运维，运维人员了解业务）；</li>
+<li>统一的标准、环境、工具、流程，例如：开发/测试环境尽可能地和生产环境保持一致；</li>
+<li>自动化和持续交付，简化重复性工作和减少不必要的等待</li>
+<li>涉及多个技术支撑：敏捷开发、持续集成&amp;部署、微服务、容器、云环境等；</li>
+<li>个体和团队的成效都放在整个产品开发&amp;运维生命周期内来进行评价；</li>
+</ul>
+<h2 id="DevOps能力环"><a href="#DevOps能力环" class="headerlink" title="DevOps能力环"></a>DevOps能力环</h2><p><img src="/2020/09/24/DevOps/devops2.png" alt="img"></p>
+<h2 id="DevOps与持续集成、持续交付"><a href="#DevOps与持续集成、持续交付" class="headerlink" title="DevOps与持续集成、持续交付"></a>DevOps与持续集成、持续交付</h2><p>DevOps的应用场景往往是一个庞大复杂的背景和流程的场景，大都包含一个持续交付流水线。</p>
+<ul>
+<li>开发人员：IDE、Git等开发和编译工具</li>
+<li>版本控制系统：分支策略、语义化版本</li>
+<li>构建服务器：持续集成、代码质量检查</li>
+<li>工件库：存放二进制包</li>
+<li>系统的包管理器：编译或测试环境系统上管理二进制包</li>
+<li>环境一致性</li>
+<li>预发布或生产：预发布环境与生产环境互换（蓝绿发布）</li>
+<li>发布管理：在高程度自动化测试的基础上实践自动化或半自动化（人工介入）部署</li>
+<li>问题管理系统</li>
+<li>。。。。。。<br>因此，DevOps 是一个完整的面向IT运维的工作流，以 IT 自动化以及持续集成（CI）、持续部署（CD）为基础，来优化程式开发、测试、系统运维等所有环节。<br>DevOps的技术要点由“持续集成/部署“”一线贯穿，主干开发是进行持续集成的前提，自动化以及代码周边集中管理是实施持续集成的必要条件。<br>换而言之，DevOps 是持续集成思想的延伸，持续集成/部署是 DevOps 的技术核心，在没有自动化测试、持续集成/部署之下，DevOps就是空中楼阁。</li>
+</ul>
+<h2 id="一个完整的过程"><a href="#一个完整的过程" class="headerlink" title="一个完整的过程"></a>一个完整的过程</h2><ol>
+<li>开发团队接到任务，需要完成一个变更</li>
+<li>为了更加顺利地开发，将这个变更分拆为几个小变更</li>
+<li>开发人员在本地开发并且测试，如果使用了测试驱动开发，在编写功能代码之前会先编写测试，然后编写能够让测试通过的实际代码</li>
+<li>开发人员将代码提交到企业内部的Git版本控制系统上</li>
+<li>构建服务器获取这个变更并初始化构建流程，单元测试之后，变更可以被发布到二进制库里</li>
+<li>配置管理系统根据“策略”，在测试环境中安装应用了新的变更</li>
+<li>新安装触发自动化回归测试，测试成功后，质量保证团队开始做人工测试</li>
+<li>人工测试通过后，质量保证团队将“已通过”标识给予这个变革</li>
+<li>变更在预发布环境中进行验收测试</li>
+<li>验收测试完成后，预发布环境被切换成生产环境，而生产环境变为新的预发布环境</li>
+</ol>
+<h2 id="典型的CICD流水线过程"><a href="#典型的CICD流水线过程" class="headerlink" title="典型的CICD流水线过程"></a>典型的CICD流水线过程</h2><ol>
+<li>项目开发编写代码，然后把代码推送到 GitLab 里存储，通过 GitLab 的 hook 使 Jenkins 执行一些 CI 的过程，比如做一些单元测试，构建 Docker image</li>
+<li>再把这个 Docker image 调用 helm 部署到开发环境或测试环境</li>
+<li>在测试环境里通过 Jenkins 触发一个集成测试的功能</li>
+<li>完成后就可以把它部署到生产环境</li>
+<li>通过 Kubernetes addon 的方式，把 Prometheus、Grafana 等监控组件部署到集群里，实现一整套从 CI 到 CD 的监控过程<br><img src="/2020/09/24/DevOps/devops3.png" alt="img"></li>
+</ol>
+<h2 id="DevOps黄金思维圈"><a href="#DevOps黄金思维圈" class="headerlink" title="DevOps黄金思维圈"></a>DevOps黄金思维圈</h2><p>时刻关注正在做什么，尝试识别问题范围，找出解决方案和改善途径。<br>Why—》How—》What</p>
+<h3 id="Why（目的、理念）"><a href="#Why（目的、理念）" class="headerlink" title="Why（目的、理念）"></a>Why（目的、理念）</h3><p>持续且快速、可靠的自动交付软件给用户：</p>
+<ol>
+<li>实现价值的持续交付，赢得市场竞争</li>
+<li>提升研发（增值活动）的时间，极大化增值活动产出</li>
+</ol>
+<h3 id="How（方法、措施）"><a href="#How（方法、措施）" class="headerlink" title="How（方法、措施）"></a>How（方法、措施）</h3><ul>
+<li>建设自动化、可重复、可靠的持续交付流水线（IT服务供应链）</li>
+<li>主要包括代码管理、持续集成、自动化测试、自动化部署、基础设施自动化管理等方面的工程能力</li>
+</ul>
+<h3 id="What（现象、成果）"><a href="#What（现象、成果）" class="headerlink" title="What（现象、成果）"></a>What（现象、成果）</h3><ol>
+<li>每次代码提交都需要经过流水线验证</li>
+<li>每次部署的版本都经过多环境验证</li>
+<li>部署频率可以得到提升</li>
+<li>周期时间（从代码提交到部署上线）的时间可以到分钟级</li>
+<li>部署失败率低</li>
+<li>部署失败的修复时间短，影响小</li>
+</ol>
+<h1 id="一些图示"><a href="#一些图示" class="headerlink" title="一些图示"></a>一些图示</h1><h2 id="关系与演进"><a href="#关系与演进" class="headerlink" title="关系与演进"></a>关系与演进</h2><p><img src="/2020/09/24/DevOps/devops4.png" alt="img"></p>
+<h2 id="涉及的工具"><a href="#涉及的工具" class="headerlink" title="涉及的工具"></a>涉及的工具</h2><p>DevOps的目标不是单靠一款工具就能实现的。<br>在各个阶段，每个都有其单独对应的目标。<br>依赖于组织的选择，有着各种各样的工具可以在相应的背景和趋势下，实现当前业务目标，满足中远期的需求。<br><img src="/2020/09/24/DevOps/devops5.jpg" alt="img"></p>
+<p><img src="/2020/09/24/DevOps/devops6.png" alt="img"></p>
+<p><strong>DevOps对应用程序发布的影响</strong></p>
+<p>在很多企业中，应用程序发布是一项涉及多个团队、压力很大、风险很高的活动。然而在具备DevOps能力的组织中，应用程序发布的风险很低，原因如下 [2] ：</p>
+<p><strong>（1）减少变更范围</strong></p>
+<p>与传统的瀑布模式模型相比，采用敏捷或迭代式开发意味着更频繁的发布、每次发布包含的变化更少。由于部署经常进行，因此每次部署不会对生产系统造成巨大影响，应用程序会以平滑的速率逐渐生长。</p>
+<p><strong>（2）加强发布协调</strong></p>
+<p>靠强有力的发布协调人来弥合开发与运营之间的技能鸿沟和沟通鸿沟；采用电子数据表、电话会议和企业门户（wiki、sharepoint）等协作工具来确保所有相关人员理解变更的内容并全力合作。</p>
+<p><strong>（3）自动化</strong></p>
+<p>强大的部署自动化手段确保部署任务的可重复性、减少部署出错的可能性。</p>
+<p>与传统开发方法那种大规模的、不频繁的发布（通常以“季度”或“年”为单位）相比，敏捷方法大大提升了发布频率（通常以“天”或“周”为单位）。</p>
+<p><strong>实现DevOps需要什么？</strong></p>
+<p><strong>硬性要求：工具上的准备</strong></p>
+<p>上文提到了工具链的打通，那么工具自然就需要做好准备。现将工具类型及对应的不完全列举整理如下：</p>
+<p>代码管理（SCM）：<strong>GitHub</strong>、GitLab、BitBucket、SubVersion</p>
+<p>构建工具：<strong>Ant</strong>、Gradle、<strong>maven</strong></p>
+<p>自动部署：Capistrano、CodeDeploy</p>
+<p>持续集成（CI）：Bamboo、Hudson、Jenkins</p>
+<p>配置管理：Ansible、Chef、Puppet、SaltStack、ScriptRock GuardRail</p>
+<p>容器：<strong>Docker</strong>、LXC、第三方厂商如AWS</p>
+<p>编排：Kubernetes、Core、Apache Mesos、DC/OS</p>
+<p>服务注册与发现：<strong>Zookeeper</strong>、etcd、Consul</p>
+<p>脚本语言：python、ruby、shell</p>
+<p>日志管理：ELK、Logentries</p>
+<p>系统监控：Datadog、Graphite、Icinga、Nagios</p>
+<p>性能监控：AppDynamics、New Relic、Splunk</p>
+<p>压力测试：JMeter、Blaze Meter、loader.io</p>
+<p>预警：PagerDuty、pingdom、厂商自带如AWS SNS</p>
+<p>HTTP加速器：Varnish</p>
+<p>消息总线：ActiveMQ、SQS</p>
+<p>应用服务器：Tomcat、JBoss</p>
+<p>Web服务器：Apache、Nginx、IIS</p>
+<p>数据库：MySQL、Oracle、PostgreSQL等关系型数据库；cassandra、mongoDB、redis等NoSQL数据库</p>
+<p>项目管理（PM）：Jira、Asana、Taiga、Trello、Basecamp、Pivotal Tracker</p>
+<p>在工具的选择上，需要结合公司业务需求和技术团队情况而定。（注：更多关于工具的详细介绍可以参见此文：51 Best DevOps Tools for #DevOps Engineers）</p>
+<p><strong>软性需求：文化和人</strong></p>
+<p>DevOps成功与否，公司组织是否利于协作是关键。开发人员和运维人员可以良好沟通互相学习，从而拥有高生产力。并且协作也存在于业务人员与开发人员之间。</p>
 
       
     </div>
@@ -529,7 +466,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
